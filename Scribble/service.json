@@ -1,0 +1,12 @@
+[
+{
+    "Name": "ScribbleAppCpp",
+    "Description": "Scribble App C++",
+    "Executable": "./ScribbleApp/ScribbleAppCpp.exe",
+    "Directory": "./ScribbleApp/ScribbleAppCpp/",
+    "Arguments": [],
+    "Environment": [],
+    "AllowMultipleConnections": false,
+    "StartupInstances": 0
+  }
+]
