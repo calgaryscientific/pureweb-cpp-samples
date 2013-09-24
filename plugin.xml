@@ -14,7 +14,7 @@
         <property name="licenseManager" ref="licenseManager"/>
         <property name="application" value="DDx"/>
         <property name="description" value="DDx diagnostics app"/>
-        <property name="executable" value="${catalina.home}/../bin/DDx/DDxService.exe"/>
+        <property name="executable" value="${catalina.home}/../bin/DDxService/DDxService.exe"/>
     </bean>
     <bean class="pureweb.cluster.SupportedClients" scope="prototype" id="supportedClients">
         <property name="supportedClients" ref="supportedClientsMap"/>
