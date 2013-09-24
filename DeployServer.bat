@@ -12,4 +12,4 @@ md "%PUREWEB_HOME%\bin"\%1
 xcopy /YFDI %PUREWEB_LIBS%\C++\VS2010\lib\*.dll "%PUREWEB_HOME%\bin"\%1 
 xcopy /YFDI %3\DDxService.exe "%PUREWEB_HOME%\bin"\%1 
 
-xcopy /YFDI %2\plugin.xml "%PUREWEB_HOME%\conf\"%1-plugin.xml
+copy %2\plugin.xml "%PUREWEB_HOME%\conf\"%1-plugin.xml
