@@ -12,7 +12,7 @@
 class DDx : public CSI::PureWeb::Server::ISessionDefaultColorProvider
 {
 public:
-    void Go();
+    void Go(int argc, char* argv[]);
 
 private:
     void OnPureWebStartup(CSI::PureWeb::Server::StateManager&, CSI::EmptyEventArgs&);
@@ -33,4 +33,7 @@ private:
     DDxOwnershipView m_ownershipView;
     CSI::Threading::Signal m_stop;
     CountedPtr<PingResponder> m_pingResponder;
+    CountedPtr<StateManager> m_stateManager;
+    CountedPtr<StateManagerServer> m_server;
+    CountedPtr<CSI::Net::IPAddress> m_address;
 };

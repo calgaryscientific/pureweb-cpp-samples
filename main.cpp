@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
         CSI::AutoLibraryInitializer csiLibInit;
         DDx app;
         
-        app.Go();
+        app.Go(argc, argv);
     }
     catch (CSI::Exception const & e)
     {

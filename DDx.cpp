@@ -15,22 +15,38 @@ using namespace CSI::PureWeb::Diagnostics;
 DEFINE_CLASS_LOGGER(DDx);
 #define logger _CLASS_LOGGER
 
-void DDx::Go()
+void DDx::Go(int argc, char* argv[])
 {
-    StateManagerServer server;
-    StateManager stateManager("DDx");
+    m_server = new StateManagerServer();
+    m_stateManager = new StateManager("DDx");
 
     m_pingResponder = new PingResponder();
-    stateManager.PluginManager().RegisterPlugin("DDxPingResponder", m_pingResponder.get());
+    m_stateManager->PluginManager().RegisterPlugin("DDxPingResponder", m_pingResponder.get());
 
     // Register shutdown handler and start
-    stateManager.Initialized() += Bind(this, &DDx::OnPureWebStartup);
-    stateManager.Uninitialized() += Bind(this, &DDx::OnPureWebShutdown);
-    server.Start(&stateManager);
+    m_stateManager->Initialized() += Bind(this, &DDx::OnPureWebStartup);
+    m_stateManager->Uninitialized() += Bind(this, &DDx::OnPureWebShutdown);
+    if (argc == 1)
+    {
+        m_server->Start(m_stateManager.get());
+    }
+    else
+    {
+        m_address = new CSI::Net::IPAddress();
+        
+        if (CSI::Net::IPAddress::TryParse(argv[1], *m_address))
+        {
+            m_server->Start(m_stateManager.get(), *m_address, 8082);
+        }
+        else
+        {
+            logger.Error.Format("Unable to parse address {0}", argv[1]);
+        }
+    }
 
     m_stop.Acquire();
 
-    while (!server.Stop(TimeSpan::FromMilliseconds(250)))
+    while (!m_server->Stop(TimeSpan::FromMilliseconds(250)))
     {
         // a server thread may be blocked on an operation queued to the UI thread
         logger.Debug.Format("Shutting down server {0}", DateTime::Now());
@@ -39,6 +55,11 @@ void DDx::Go()
 
 void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&) 
 {
+    if (m_address.get() != NULL)
+    {
+        logger.Info.Format("Connect to http://{0}:8080/pureweb/app?name={1}&client=silverlight&appId={2}", m_address->ToString(), m_stateManager->ApplicationName(), m_stateManager->ApplicationId());
+    }
+
     ProfilerManager& profilerManager = stateManager.ProfilerManager();
     profilerManager.SetUpdateIntervalMs(1000);
     CSI_ASSERT(profilerManager.UpdateIntervalMs() == 1000);
@@ -124,9 +145,34 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     
     CollaborationManager::Instance().SetSessionDefaultColorProvider(NULL);
     
-    stateManager.CommandManager().RemoveUiHandler("TakeOwnership");
+    stateManager.XmlStateManager().RemoveAllValueChangedHandlers(_DDx_USETILES);
 
-    m_stop.Set();
+    stateManager.CommandManager().RemoveUiHandler("TakeOwnership");
+    stateManager.CommandManager().RemoveUiHandler("SetProperty");
+    stateManager.CommandManager().RemoveUiHandler("Echo");
+    stateManager.CommandManager().RemoveUiHandler("TestMerge");
+
+//    DDxView.m_colorCount = 0;
+
+    stateManager.PluginManager().UnregisterPlugin("DDxPingResponder", m_pingResponder.get());
+
+    // if running unmanaged, restart the state manager server to connect back to the server
+
+    if (m_address.get() != NULL)
+    {
+        try
+        {
+            m_server->Start(m_stateManager.get(), *m_address, 8082);
+        }
+        catch (Exception e)
+        {
+            logger.Error.Format("An error occurred starting the StateManagerServer: " + e.Message());
+        }
+    }
+    else
+    {
+            m_stop.Set();
+    }
 }
   
 PureWebColor DDx::GetSessionDefaultColor(Guid sessionId)
