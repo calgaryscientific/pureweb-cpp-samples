@@ -170,9 +170,10 @@
     </ClCompile>
     <ClCompile Include="DDxView.cpp" />
     <ClCompile Include="PGView.cpp" />
-    <ClCompile Include="PingResponder.cpp" />
+    <ClCompile Include="ServicePingResponder.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="DeployServer.bat" />
     <None Include="plugin.xml">
       <SubType>Designer</SubType>
@@ -184,7 +185,7 @@
     <ClInclude Include="DDxOwnershipView.h" />
     <ClInclude Include="DDxView.h" />
     <ClInclude Include="PGView.h" />
-    <ClInclude Include="PingResponder.h" />
+    <ClInclude Include="ServicePingResponder.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SDK\C++\CSI\PureWeb\ImageProcessing\ImageProcessing64.vcxproj">

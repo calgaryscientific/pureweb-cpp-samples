@@ -7,7 +7,7 @@
 #include "DDxView.h"
 #include "PGView.h"
 #include "DDxOwnershipView.h"
-#include "PingResponder.h"
+#include "ServicePingResponder.h"
 
 class DDx : public CSI::PureWeb::Server::ISessionDefaultColorProvider
 {

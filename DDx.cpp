@@ -57,7 +57,7 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
 {
     if (m_address.get() != NULL)
     {
-        logger.Info.Format("Connect to http://{0}:8080/pureweb/app?name={1}&client=silverlight&appId={2}", m_address->ToString(), m_stateManager->ApplicationName(), m_stateManager->ApplicationId());
+        logger.Info.Format("Connect to http://{0}:8080/pureweb/app?name={1}&client=html5&appId={2}", m_address->ToString(), m_stateManager->ApplicationName(), m_stateManager->ApplicationId());
     }
 
     ProfilerManager& profilerManager = stateManager.ProfilerManager();
@@ -69,7 +69,7 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().AddUiHandler("SetProperty", Bind(this, &DDx::OnSetProperty));
     stateManager.CommandManager().AddUiHandler("Echo", Bind(this, &DDx::OnEcho));
     stateManager.CommandManager().AddUiHandler("TestMerge", Bind(this, &DDx::OnTestMerge));
-    
+
     const bool useTiles = true;
     stateManager.XmlStateManager().SetValueAs<bool>(_DDx_USETILES, useTiles);
 
@@ -151,10 +151,6 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().RemoveUiHandler("SetProperty");
     stateManager.CommandManager().RemoveUiHandler("Echo");
     stateManager.CommandManager().RemoveUiHandler("TestMerge");
-
-//    DDxView.m_colorCount = 0;
-
-    stateManager.PluginManager().UnregisterPlugin("DDxPingResponder", m_pingResponder.get());
 
     // if running unmanaged, restart the state manager server to connect back to the server
 

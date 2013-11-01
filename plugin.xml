@@ -43,4 +43,6 @@
         <property name="image" value="/themes/pureweb/default.png"/>
         <property name="role" value="ROLE_PUREWEB_USER"/>
     </bean>
+
+    <bean class="ddx.plugin.DDxPingResponderPlugin"/>
 </beans>
