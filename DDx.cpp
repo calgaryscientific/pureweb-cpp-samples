@@ -164,6 +164,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
         catch (Exception e)
         {
             logger.Error.Format("An error occurred starting the StateManagerServer: " + e.Message());
+            m_stop.Set();
         }
     }
     else

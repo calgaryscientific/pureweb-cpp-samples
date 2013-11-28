@@ -42,6 +42,11 @@
 
         <property name="image" value="/themes/pureweb/default.png"/>
         <property name="role" value="ROLE_PUREWEB_USER"/>
+      
+        <!-- Optional. If set to true, managed app links will not appear on /pureweb/server/links. -->
+        <!-- This is useful when the service is not installed on the server and cannot be launched -->
+        <!-- as a managed service.                                                                 -->
+        <!-- <property name="isUnmanagedOnly" value="true"/>                                       -->
     </bean>
 
     <bean class="ddx.plugin.DDxPingResponderPlugin"/>
