@@ -27,6 +27,7 @@ private:
     void OnTestMerge(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
 
     static const int m_viewCount = 4;
+    static int m_colorCount;
     
     DDxView m_views[m_viewCount];
     PGView m_pgView;

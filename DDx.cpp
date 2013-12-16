@@ -15,6 +15,8 @@ using namespace CSI::PureWeb::Diagnostics;
 DEFINE_CLASS_LOGGER(DDx);
 #define logger _CLASS_LOGGER
 
+int DDx::m_colorCount = 0;
+
 void DDx::Go(int argc, char* argv[])
 {
     m_server = new StateManagerServer();
@@ -145,6 +147,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.ViewManager().UnregisterView(m_ownershipView.ViewName);
     
     CollaborationManager::Instance().SetSessionDefaultColorProvider(NULL);
+    m_colorCount = 0;
     
     stateManager.XmlStateManager().RemoveAllValueChangedHandlers(_DDx_USETILES);
 
@@ -175,9 +178,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
   
 PureWebColor DDx::GetSessionDefaultColor(Guid sessionId)
 {
-    static int i = 0;
-
-    switch (i++ % 7)
+    switch (m_colorCount++ % 7)
     {
     case 0:
         return PureWebColor::FromKnownColor(PureWebKnownColor::Red);
