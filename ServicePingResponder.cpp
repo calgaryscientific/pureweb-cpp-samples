@@ -29,6 +29,13 @@ void PingResponder::Uninitialize()
 {
     m_pStateManager->CommandManager().RemoveUiHandler("DDxRoundtripPing");
     m_pStateManager->CommandManager().RemoveUiHandler("DDxServiceServerPing");
+
+    // make sure that last instance of m_servicePing is deleted before the app exits to prevent 
+    // mysterious exceptions in CSI.Standard when the app does exit (PWEB-4013) - probably due
+    // to static initializtaion/teardown and attempting to access objects that no longer exist
+    // in the ServicePing destructor.
+
+    m_servicePing = NULL;
 }
 
 
