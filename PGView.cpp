@@ -17,14 +17,14 @@ static UInt64 InitializeImage(Image& image, UInt64 seed)
 {
     const int perRowShift = 10; 
 
-    for (SizeType i = 0; i < image.Height(); i++)
+    for (SizeType i = 0; i < (SizeType)image.Height(); i++)
     {
         Byte* pRow = image.Scan0() + (i * image.RowStride());
 
         double pixelValue = (double)((seed + i * perRowShift) % 256);
         double perPixelIncrement = 512.0 / image.Width();
         
-        for (SizeType j = 0; j < image.Width(); j++)
+        for (SizeType j = 0; j < (SizeType)image.Width(); j++)
         {
             *pRow = (Byte)pixelValue;
             *(pRow + 1) = 0;
