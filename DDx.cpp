@@ -139,12 +139,14 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     for(int i = 0; i < m_viewCount; i++)
     {
         stateManager.ViewManager().UnregisterView(m_views[i].ViewName);
+        m_views[i].SetClientSize(Size(0, 0));
     }
 
     m_pgView.Uninitialize();
     stateManager.ViewManager().UnregisterView(m_pgView.ViewName);
 
     stateManager.ViewManager().UnregisterView(m_ownershipView.ViewName);
+    m_ownershipView.SetClientSize(Size(0, 0));
     
     CollaborationManager::Instance().SetSessionDefaultColorProvider(NULL);
     m_colorCount = 0;

@@ -110,7 +110,9 @@ void PGView::Uninitialize()
     StateManager::Instance()->XmlStateManager().RemoveValueChangedHandler(_DDx_RAPIDIMAGEGENERATION, Bind(this, &PGView::OnRapidImageGenerationChanged));
     StateManager::Instance()->XmlStateManager().RemoveValueChangedHandler(_DDx_USEDEFERREDRENDERING, Bind(this, &PGView::OnUseDeferredRenderingChanged));
     StateManager::Instance()->XmlStateManager().RemoveValueChangedHandler(_DDx_USECLIENTSIZE, Bind(this, &PGView::OnUseClientSizeChanged)); 
-    StateManager::Instance()->XmlStateManager().RemoveValueChangedHandler(_DDx_SHOWMOUSEPOS, Bind(this, &PGView::OnShowMousePosChanged)); 
+    StateManager::Instance()->XmlStateManager().RemoveValueChangedHandler(_DDx_SHOWMOUSEPOS, Bind(this, &PGView::OnShowMousePosChanged));
+
+    m_clientSize = Size(0, 0);
 }
 
 void PGView::OnScreenshotRequested(CSI::Guid sessionId, CSI::Typeless typeless, CSI::Typeless& response)
