@@ -190,9 +190,19 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\SDK\C++\CSI\PureWeb\ImageProcessing\ImageProcessing64.vcxproj">
       <Project>{eb6bd469-8e64-4991-b6a0-f54c7c6e1602}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\SDK\C++\CSI\PureWeb\StateManager\win\CSI.PureWeb.StateManager64.vcxproj">
       <Project>{2f762564-1882-4e9f-9444-80740e17ba66}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
