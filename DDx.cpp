@@ -57,12 +57,6 @@ void DDx::Go(int argc, char* argv[])
 
 void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&) 
 {
-    if (m_address.get() != NULL)
-    {
-        logger.Info.Format("Connect to http://{0}:8080/pureweb/app?name={1}&client=html5&appId={2}", m_address->ToString(), m_stateManager->ApplicationName(), m_stateManager->ApplicationId());
-        logger.Info.Format("        or http://{0}:8080/pureweb/app?name={1}&client=html5&unmanaged=true", m_address->ToString(), m_stateManager->ApplicationName());
-    }
-
     ProfilerManager& profilerManager = stateManager.ProfilerManager();
     profilerManager.SetUpdateIntervalMs(1000);
     CSI_ASSERT(profilerManager.UpdateIntervalMs() == 1000);
