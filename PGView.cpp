@@ -13,15 +13,15 @@ using namespace CSI::PureWeb::Ui;
 
 static Log::Logger logger = Log::GetLogger<PGView>(); 
 
-static UInt64 InitializeImage(Image& image, UInt64 seed)
+static void InitializeImage(Image& image)
 {
-    const int perRowShift = 10; 
+    const int perRowShift = 10;
 
     for (SizeType i = 0; i < (SizeType)image.Height(); i++)
     {
         Byte* pRow = image.Scan0() + (i * image.RowStride());
 
-        double pixelValue = (double)((seed + i * perRowShift) % 256);
+        double pixelValue = (double)((i * perRowShift) % 256);
         double perPixelIncrement = 512.0 / image.Width();
         
         for (SizeType j = 0; j < (SizeType)image.Width(); j++)
@@ -39,21 +39,20 @@ static UInt64 InitializeImage(Image& image, UInt64 seed)
             pixelValue += perPixelIncrement;
         }
     }
-
-    return seed + image.Height() * perRowShift;
 }
 
 static void InitializeImages(Size size, Collections::List<Image>& imageList)
 {
-    const int imageCount = 40;
+    const int imageCount = 25;
 
-    UInt64 seed = 0;
+    Image masterImage(size.Width, size.Height + imageCount, PixelFormat::Bgr24);
+    InitializeImage(masterImage);
 
     imageList.Clear();
     for (int i = 0; i < imageCount; i++)
     {
         Image image(size.Width, size.Height, PixelFormat::Bgr24);
-        seed = InitializeImage(image, seed);
+        ByteArray::Copy(masterImage.ImageBytes(), i * masterImage.RowStride(), image.ImageBytes(), 0, image.ImageBytes().Length());
 
         imageList.Add(image);
     }
