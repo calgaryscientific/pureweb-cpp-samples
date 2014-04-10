@@ -9,12 +9,18 @@ DEFINE_CLASS_LOGGER(PingResponder);
 
 PingResponder::PingResponder(): 
     m_pStateManager(NULL), 
-    m_pingResponsesReceivedCount(0) 
+    m_pingResponsesReceivedCount(0),
+    m_servicePing(NULL)
 {
 }
 
 PingResponder::~PingResponder()
 {
+    if (m_servicePing != NULL)
+    {
+        m_pStateManager->SystemMessageDispatcher().UnregisterSystemMessageHandler("DDx-Pong", Bind(m_servicePing, &ServicePing::PingMessageHandler));
+        delete m_servicePing;
+    }
 }
 
 void PingResponder::Initialize(StateManager* pStateManager)
@@ -22,6 +28,12 @@ void PingResponder::Initialize(StateManager* pStateManager)
     m_pStateManager = pStateManager;
     m_pStateManager->CommandManager().AddUiHandler("DDxRoundtripPing", Bind(this, &PingResponder::ClientPingReply));
     m_pStateManager->CommandManager().AddUiHandler("DDxServiceServerPing", Bind(this, &PingResponder::TriggerServerPing));
+
+    if (m_servicePing == NULL)
+    {
+        m_servicePing = new ServicePing(m_pStateManager, Bind(this, &PingResponder::PingMessageHandler));
+        m_pStateManager->SystemMessageDispatcher().RegisterSystemMessageHandler("DDx-Pong", Bind(m_servicePing, &ServicePing::PingMessageHandler));
+    }
 }
 
 
@@ -56,7 +68,6 @@ void PingResponder::ClientPingReply(Guid sessionId, Typeless const& command, Typ
 void PingResponder::TriggerServerPing(Guid sessionId, Typeless const& command, Typeless& responses)
 {
     startPing = MonotonicTime::Now();
-    m_servicePing = new ServicePing(m_pStateManager, Bind(this, &PingResponder::PingMessageHandler));
     m_servicePing->SendPing();
 }
 
@@ -71,12 +82,10 @@ ServicePing::ServicePing(StateManager *stm, PingResponseHandler hnd) :
     m_pStateManager(stm),
     m_pingResponseHandler(hnd)
 {
-    m_pStateManager->SystemMessageDispatcher().RegisterSystemMessageHandler("DDx-Pong", Bind(this, &ServicePing::PingMessageHandler));
 }
 
 ServicePing::~ServicePing()
 {
-    m_pStateManager->SystemMessageDispatcher().UnregisterSystemMessageHandler("DDx-Pong", Bind(this, &ServicePing::PingMessageHandler));
 }
 
 void ServicePing::SendPing()

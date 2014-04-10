@@ -22,9 +22,6 @@ void DDx::Go(int argc, char* argv[])
     m_server = new StateManagerServer();
     m_stateManager = new StateManager("DDx");
 
-    m_pingResponder = new PingResponder();
-    m_stateManager->PluginManager().RegisterPlugin("DDxPingResponder", m_pingResponder.get());
-
     // Register shutdown handler and start
     m_stateManager->Initialized() += Bind(this, &DDx::OnPureWebStartup);
     m_stateManager->Uninitialized() += Bind(this, &DDx::OnPureWebShutdown);
@@ -96,6 +93,9 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
 
     stateManager.XmlStateManager().AddChildChangedHandler(_DDx_GRID, Bind(this, &DDx::OnGridStateChanged));
     stateManager.XmlStateManager().AddChildChangedHandler("/PureWeb/Profiler", Bind(this, &DDx::OnProfilerStateChanged));
+
+    m_pingResponder = new PingResponder();
+    m_stateManager->PluginManager().RegisterPlugin("DDxPingResponder", m_pingResponder.get());
 }
 
 void DDx::OnTestMerge(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
@@ -151,6 +151,8 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().RemoveUiHandler("SetProperty");
     stateManager.CommandManager().RemoveUiHandler("Echo");
     stateManager.CommandManager().RemoveUiHandler("TestMerge");
+
+    m_stateManager->PluginManager().UnregisterPlugin("DDxPingResponder", m_pingResponder.get());
 
     // if running unmanaged, restart the state manager server to connect back to the server
 

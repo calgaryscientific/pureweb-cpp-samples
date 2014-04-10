@@ -19,7 +19,7 @@ class PingResponder : public IStateManagerPlugin
 private:
     StateManager* m_pStateManager;
     int m_pingResponsesReceivedCount; 
-    CountedPtr<ServicePing> m_servicePing;
+    ServicePing *m_servicePing;
     bool m_sendingPing;
     MonotonicTime startPing; 
 
@@ -47,13 +47,12 @@ class ServicePing
      StateManager *m_pStateManager;
      MonotonicTime startPing; 
 
-     void PingMessageHandler(Typeless const& message);
-
  public:
      ServicePing(StateManager *stm, PingResponseHandler hnd);
      virtual ~ServicePing();
 
      void SendPing();
+     void PingMessageHandler(Typeless const& message);
 };
 
 #endif // SERVICEPINGRESPONDER_H
