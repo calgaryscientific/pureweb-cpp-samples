@@ -63,4 +63,5 @@ private:
 
     int m_mouseX;
     int m_mouseY;
+	unsigned long m_imageCounter;
 };

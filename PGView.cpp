@@ -68,6 +68,7 @@ PGView::PGView()
       m_useDeferredRendering(true),
       m_useClientSize(true),
       m_showMousePos(true),
+	  m_imageCounter(0), 
       m_timer(TimeSpan::FromMilliseconds(50))   // approx 20 fps
 {
 }
@@ -230,6 +231,15 @@ void PGView::RenderView(RenderTarget target)
         //canvas.FillRect(red, m_mouseX-width/2, m_mouseY-width/2, m_mouseX+width/2, m_mouseY+width/2);
         canvas.FillCircle(red, m_mouseX, m_mouseY, 11);
     }
+
+	// pass up image counter, rotate around
+	if (m_imageCounter == std::numeric_limits<unsigned int>::max())
+		m_imageCounter = 0;
+	else
+		m_imageCounter++;
+
+	Collections::Map<String, String> parameters = target.Parameters();
+	parameters["imagecounter"] = StringConverter<unsigned int>::ToString(m_imageCounter);
 }
 
 DEFINE_ENUM(KeyboardEventName, KeyboardEventType::Enum)
