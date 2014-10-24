@@ -16,4 +16,8 @@ echo "Creating directory %PUREWEB_HOME%\conf..."
 md "%PUREWEB_HOME%\conf" 
 
 :conf
-copy %2\plugin.xml "%PUREWEB_HOME%\conf\%1-plugin.xml"
+SET targetDir=###%2%###
+SET targetDir=%targetDir:"###=%
+SET targetDir=%targetDir:###"=%
+SET targetDir=%targetDir:###=%
+%PUREWEB_HOME%\bin\service-manager-cfg.exe -configFile %PUREWEB_HOME%\bin\service_config.json -action add -changeFile %targetDir%\service.json 

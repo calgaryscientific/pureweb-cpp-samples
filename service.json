@@ -1,0 +1,12 @@
+[
+{
+    "Name": "DDxService",
+    "Description": "DDx App C++",
+    "Executable": "./DDxService/DDxService.exe",
+    "Directory": "./DDxService/DDxService/",
+    "Arguments": [],
+    "Environment": [],
+    "AllowMultipleConnections": false,
+    "StartupInstances": 0
+  }
+]
