@@ -7,8 +7,8 @@ md "%PUREWEB_HOME%\bin\%1"
 
 :deploy
 echo "Sending application files to  %PUREWEB_HOME%\bin\%1..." 
-xcopy /YFDI "%PUREWEB_HOME%\libs\C++\VS2010\lib\*.dll" "%PUREWEB_HOME%\bin\%1" 
-xcopy /YFDI "%PUREWEB_HOME%\libs\C++\VS2010\lib\*.pdb" "%PUREWEB_HOME%\bin\%1" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.dll" "%PUREWEB_HOME%\bin\%1" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.pdb" "%PUREWEB_HOME%\bin\%1" 
 xcopy /YFDI %3\%1.exe "%PUREWEB_HOME%\bin\%1"
 
 :conf
