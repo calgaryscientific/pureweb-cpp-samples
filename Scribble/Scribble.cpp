@@ -47,17 +47,15 @@ static void OnPureWebShutdown(CSI::PureWeb::Server::StateManager&, CSI::EmptyEve
 // Class to look for /PureWeb and (optional) /ServerAddress command line parameters
 class CPureWebCommandLineInfo : public CCommandLineInfo
 {
-private:
-    BOOL m_nextParamIsServerAddress;
-
 public:
 
     BOOL m_bStartPureWeb;
     CSI::String m_serverAddress;
+    int m_port;
 
     CPureWebCommandLineInfo()
         : m_bStartPureWeb(FALSE),
-          m_nextParamIsServerAddress(FALSE)
+          m_port(8082)
     {
     }
 
@@ -79,6 +77,11 @@ public:
                 m_serverAddress += tmp.c_str()[i];
 #endif
             }
+        } 
+        else if (bFlag && 0 == _tcsnicmp(pszParam, _T("Port="), 5))
+        {
+            std::basic_string<TCHAR> tmp = pszParam;
+            m_port = std::stoi(tmp.substr(5));
         }
     }
 #ifdef _UNICODE
@@ -92,6 +95,11 @@ public:
         {
             std::string tmp = pszParam;
             m_serverAddress = tmp.substr(7).c_str();
+        }
+        else if (bFlag && 0 == _strnicmp(pszParam, "Port=", 5))
+        {
+            std::string tmp = pszParam;
+            m_port = std::stoi(tmp.substr(5));
         }
     }
 #endif
@@ -110,7 +118,7 @@ BOOL CScribbleApp::InitInstance()
 
     // create PureWeb object instances
     m_pServer = new CSI::PureWeb::Server::StateManagerServer();
-    m_pStateManager = new CSI::PureWeb::Server::StateManager("ScribbleAppCpp");
+    m_pStateManager = new CSI::PureWeb::Server::StateManager("ScribbleApp");
 
     // Standard initialization
     // If you are not using these features and wish to reduce the size
@@ -159,7 +167,7 @@ BOOL CScribbleApp::InitInstance()
         }
         else
         {
-			m_pServer->Start(m_pStateManager.get(), cmdInfo.m_serverAddress, 8082);
+			m_pServer->Start(m_pStateManager.get(), cmdInfo.m_serverAddress, cmdInfo.m_port);
         }
     }
 

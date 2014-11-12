@@ -20,7 +20,7 @@ int DDx::m_colorCount = 0;
 void DDx::Go(int argc, char* argv[])
 {
     m_server = new StateManagerServer();
-    m_stateManager = new StateManager("DDx");
+    m_stateManager = new StateManager("DDxService");
 
     // Register shutdown handler and start
     m_stateManager->Initialized() += Bind(this, &DDx::OnPureWebStartup);
@@ -33,14 +33,21 @@ void DDx::Go(int argc, char* argv[])
     {
         m_address = new CSI::Net::IPAddress();
         
-        if (CSI::Net::IPAddress::TryParse(argv[1], *m_address))
-        {
-            m_server->Start(m_stateManager.get(), *m_address, 8082);
-        }
-        else
+        if (!CSI::Net::IPAddress::TryParse(argv[1], *m_address))
         {
             logger.Error.Format("Unable to parse address {0}", argv[1]);
         }
+
+        if (argc == 3)
+        {
+            m_port = std::stoi(argv[2]);
+        }
+        else
+        {
+            m_port = 8082;
+        }
+
+        m_server->Start(m_stateManager.get(), *m_address, m_port);
     }
 
     m_stop.Acquire();
@@ -160,7 +167,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     {
         try
         {
-            m_server->Start(m_stateManager.get(), *m_address, 8082);
+            m_server->Start(m_stateManager.get(), *m_address, m_port);
         }
         catch (Exception e)
         {
@@ -170,7 +177,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     }
     else
     {
-            m_stop.Set();
+        m_stop.Set();
     }
 }
   
