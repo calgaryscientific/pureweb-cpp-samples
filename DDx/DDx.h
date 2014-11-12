@@ -37,4 +37,5 @@ private:
     CountedPtr<StateManager> m_stateManager;
     CountedPtr<StateManagerServer> m_server;
     CountedPtr<CSI::Net::IPAddress> m_address;
+    int m_port;
 };

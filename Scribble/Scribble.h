@@ -21,7 +21,7 @@ class CScribbleApp : public CWinApp
 private:
 
     // since the CWinApp class controls the lifecycle of 
-    // the application, we also let it manager the lifecycle
+    // the application, we also let it manage the lifecycle
     // of the the PureWeb StateManager class instances
     
     // a counted pointer to the state manager

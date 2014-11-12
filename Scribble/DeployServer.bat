@@ -11,6 +11,10 @@ xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.dll" "%PUREWEB_HOME%\bin\%1"
 xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.pdb" "%PUREWEB_HOME%\bin\%1" 
 xcopy /YFDI %3\%1.exe "%PUREWEB_HOME%\bin\%1"
 
+@REM copy libs to $(TargetDir) to enable debugging in Visual Studio
+xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.dll" "%3" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.pdb" "%3" 
+
 :conf
 SET targetDir=###%2%###
 SET targetDir=%targetDir:"###=%
