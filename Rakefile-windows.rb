@@ -9,6 +9,17 @@ ScribbleTarget = "Samples\\Scribble\\ScribbleAppDebug_Cpp"
 SampleTargets = "#{DDxServiceTarget};#{ScribbleTarget}"
 SampleCleanTargets = "#{DDxServiceTarget}:clean;#{ScribbleTarget}:clean"
 
+# Clean files left behind by Visual Studio
+def clean_debris 
+    objdirs = File.join("**/", "obj")
+    userfiles = File.join("**/", "*.vcxproj.user")
+
+    delete_list = FileList.new(objdirs, userfiles)
+    delete_list.each do |file|
+        puts "Removing #{file}"
+        FileUtils.rm_rf("#{file}")
+    end
+end
 
 #### Task Definintions
 
@@ -45,13 +56,21 @@ desc "Build only debug libraries that are commonly used by devs"
 task :build_debug => [:build_debug_2010]
 
 desc "Build All C++ libraries"
-task :build do
-    sh("rake build_debug_2010")
-    sh("rake build_release_2010")
-    
-	puts "2008 build currently disabled"
-	#sh("rake build_debug_2008")
-    #sh("rake build_release_2008")
+task :build,[:variant] => [:deps] do |t, args|
+
+	type = args[:variant][0]
+	
+	if type == nil
+		abort("Must run build with a valid variant. E.g, rake build[debug]")
+	end
+	
+	if type == "debug"
+		sh("rake build_debug_2010")
+	end
+	
+	if type == "release"
+		sh("rake build_release_2010")
+	end
 end
 
 desc "Test SDK sample C++ libraries"
@@ -81,16 +100,29 @@ task :clean_debug => [:clean_debug_2010]
 
 # Does not clean everything - must blow away manually
 desc "Clean All C++ libraries"
-task :clean do
-    sh("rake clean_debug_2010")
-    sh("rake clean_release_2010")
-    #sh("rake clean_debug_2008")
-    #sh("rake clean_release_2008")
+task :clean,[:variant]  do |t, args|
+
+	type = args[:variant][0]
+	
+	if type == nil
+		abort("Must run clean with a valid variant. E.g, rake build[debug]")
+	end
+	
+	if type == "debug"
+		sh("rake clean_debug_2010")
+	end
+	
+	if type == "release"
+		sh("rake clean_release_2010")
+	end
+	
     clean_debris
 end
 
 desc "Clean All the C++ tests"
 task :cleantest do
+	Rake::Task[:clean].invoke "debug"
+	Rake::Task[:clean].invoke "release"
 end
 
 
