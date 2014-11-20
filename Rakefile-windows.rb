@@ -1,7 +1,4 @@
 
-MSBUILD = "C:/Windows/Microsoft.NET/Framework/v4.0.30319/msbuild"
-VS2010SLN = "#{PWROOT}/PureWeb2010.sln"
-VS2008SLN = "#{PWROOT}/PureWeb2008.sln"
 
 DDxServiceTarget = "Samples\\DDx\\DDxService"
 ScribbleTarget = "Samples\\Scribble\\ScribbleAppDebug_Cpp"
