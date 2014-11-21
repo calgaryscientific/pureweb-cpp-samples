@@ -20,4 +20,7 @@ SET targetDir=###%2%###
 SET targetDir=%targetDir:"###=%
 SET targetDir=%targetDir:###"=%
 SET targetDir=%targetDir:###=%
-%PUREWEB_HOME%\bin\service-manager-cfg.exe -configFile %PUREWEB_HOME%\bin\service_config.json -action add -changeFile %targetDir%\service.json 
+
+if exist %PUREWEB_HOME%\bin\service-manager-cfg.exe (
+	%PUREWEB_HOME%\bin\service-manager-cfg.exe -configFile %PUREWEB_HOME%\bin\service_config.json -action add -changeFile %targetDir%\service.json 
+)
