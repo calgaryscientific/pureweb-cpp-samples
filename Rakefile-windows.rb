@@ -61,6 +61,8 @@ task :build,[:variant] => [:deps] do |t, args|
 		abort("Must run build with a valid variant. E.g, rake build[debug]")
 	end
 	
+	Dir.chdir(File.dirname(__FILE__))
+	
 	if type == "debug"
 		sh("rake build_debug_2010")
 	end
@@ -105,6 +107,8 @@ task :clean,[:variant]  do |t, args|
 		abort("Must run clean with a valid variant. E.g, rake build[debug]")
 	end
 	
+	Dir.chdir(File.dirname(__FILE__))
+	
 	if type == "debug"
 		sh("rake clean_debug_2010")
 	end
@@ -117,9 +121,11 @@ task :clean,[:variant]  do |t, args|
 end
 
 desc "Clean All the C++ tests"
-task :cleantest do
-	Rake::Task[:clean].invoke "debug"
-	Rake::Task[:clean].invoke "release"
+task :cleantest do |t|
+	scope = t.scope.first || ''
+	scope = scope.length > 0 ? scope + ":" : scope
+	Rake::Task[scope + 'clean'].invoke "debug"
+	Rake::Task[scope + 'clean'].invoke "release"
 end
 
 

@@ -1,10 +1,10 @@
 
-require("../../Rakefile-init")
+require_relative("../../Rakefile-init")
 
 if OS.windows?
-    require("./Rakefile-windows")
+    require_relative("./Rakefile-windows")
 else
-    require("./Rakefile-linux")
+    require_relative("./Rakefile-linux")
 end
 
 desc "Build and test C++ libraries"
