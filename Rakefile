@@ -7,6 +7,6 @@ else
     require_relative("./Rakefile-linux")
 end
 
-desc "Build and test C++ libraries"
-task :all => [:build, :test]
+desc "Build, Stage, Package & Test C++ Samples"
+task :all => [:setup, :stage, :package, :test]
 
