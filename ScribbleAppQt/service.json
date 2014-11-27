@@ -1,0 +1,12 @@
+[
+ {
+    "Name": "scribble",
+    "Description": "Scribble Qt App C++",
+    "Executable": "./scribble",
+    "Directory": "./ScribbleAppQt",
+    "Arguments": ["-PureWeb", "-Server=127.0.0.1", "-Port=8085"],
+    "Environment": [],
+    "AllowMultipleConnections": false,
+    "StartupInstances": 0
+  }
+]
