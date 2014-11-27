@@ -3,10 +3,8 @@
 @ddxservicetarget = "Samples\\DDx\\DDxService"
 @scribbletarget = "Samples\\Scribble\\ScribbleAppDebug_Cpp"
 
-@sampletargets = "#{DDxServiceTarget};#{ScribbleTarget}"
-@samplecleantargets = "#{DDxServiceTarget}:clean;#{ScribbleTarget}:clean"
-
-@stagedir = "#{BUILD_DIR}/stage/sdk/Libs/C++"
+@sampletargets = "#{@ddxservicetarget};#{@scribbletarget}"
+@samplecleantargets = "#{@ddxservicetarget}:clean;#{@scribbletarget}:clean"
 
 # Clean files left behind by Visual Studio
 def clean_debris 
@@ -36,24 +34,66 @@ task :setup do
     sh("#{MSBUILD} /version") { |ok, res| abort("Can't find msbuild!") if !ok }
 end
 
+desc "Build C++ Samples"
+task :build,[:variant] => [:deps] do |t, args|
+
+	type = args[:variant][0]
+	
+	if type == nil
+		abort("Must run build with a valid variant. E.g, rake build[debug]")
+	end
+	
+	
+	
+	if type == "debug"
+		t.invoke_in_scope('build_debug_2010')
+	end
+	
+	if type == "release"
+		t.invoke_in_scope('build_release_2010')
+	end
+end
+
+
+desc "Stage the C++ Samples into #{ENV['PUREWEB_HOME']}"
+task :stage => [@stagedir] do |t|	
+	t.invoke_in_scope('build', 'release') # Staging is done by the DeployServer.bat Post-Build
+end
+
+task :stageclean do	
+	FileUtils.rm_r ENV['PUREWEB_HOME'] + '/apps/DDxService', :force => true
+	FileUtils.rm_r ENV['PUREWEB_HOME'] + '/apps/ScribbleAppCpp', :force => true
+	FileUtils.rm_r ENV['PUREWEB_HOME'] + '/apps/ScribbleAppQt', :force => true
+end
+
+desc "Test C++ Samples"
+task :test do |t|	
+end
+
+desc "Package the C++ SDK"
+task :package do
+end
+
+task :packageclean do
+end
+
+
 # Does not clean everything - must blow away manually
-desc "Clean All C++ libraries"
+desc "Clean All C++ Libraries"
 task :clean,[:variant]  do |t, args|
 
 	type = args[:variant][0]
 	
 	if type == nil
 		abort("Must run clean with a valid variant. E.g, rake build[debug]")
-	end
-	
-	Dir.chdir(File.dirname(__FILE__))
+	end	
 	
 	if type == "debug"
-		sh("rake clean_debug_2010")
+		t.invoke_in_scope('clean_debug_2010')
 	end
 	
-	if type == "release"
-		sh("rake clean_release_2010")
+	if type == "release"		
+		t.invoke_in_scope('clean_release_2010')
 	end
 	
     clean_debris
@@ -63,11 +103,11 @@ end
 
 #### Internal Tasks
 task :build_debug_2010 => [:setup] do
-	sh("#{MSBUILD} #{VS2010SLN} /m /t:#{SampleTargets} /p:Configuration=DebugCpp;BuildProjectReferences=false")
+	sh("#{MSBUILD} #{VS2010SLN} /m /t:#{@sampletargets} /p:Configuration=DebugCpp;BuildProjectReferences=false")
 end
 
 task :build_release_2010 => [:setup] do
-	sh("#{MSBUILD} #{VS2010SLN} /m /t:#{SampleTargets} /p:Configuration=ReleaseCpp;BuildProjectReferences=false")
+	sh("#{MSBUILD} #{VS2010SLN} /m /t:#{@sampletargets} /p:Configuration=ReleaseCpp;BuildProjectReferences=false")
 end
 
 task :build_release => [:build_release_2010]
@@ -75,28 +115,8 @@ task :build_release => [:build_release_2010]
 
 task :build_debug => [:build_debug_2010]
 
-task :build,[:variant] => [:deps] do |t, args|
 
-	type = args[:variant][0]
-	
-	if type == nil
-		abort("Must run build with a valid variant. E.g, rake build[debug]")
-	end
-	
-	Dir.chdir(File.dirname(__FILE__))
-	
-	if type == "debug"
-		sh("rake build_debug_2010")
-	end
-	
-	if type == "release"
-		sh("rake build_release_2010")
-	end
-end
 
-desc "Test SDK sample C++ libraries"
-task :test do
-end
 
 
 
