@@ -43,6 +43,7 @@
 #include "mainwindow.h"
 #include "pureweb.h"
 #include "QtMessageTickler.h"
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -55,12 +56,36 @@ int main(int argc, char *argv[])
 
     // Create PureWeb object instances
     server = new CSI::PureWeb::Server::StateManagerServer();
-    stateManager = new CSI::PureWeb::Server::StateManager("Scribble");
+    stateManager = new CSI::PureWeb::Server::StateManager("scribble");
 
     if (argc > 1 && QString(argv[1]).contains("PureWeb", Qt::CaseInsensitive))
     {
         stateManager->PluginManager().RegisterPlugin("QtMessageTickler", new QtMessageTickler());
-        server->Start(stateManager.get());
+
+
+	QString serverAddress;
+	QString port = "8082";
+
+	if( argc > 2 && QString(argv[2]).contains("Server", Qt::CaseInsensitive) )
+	  {
+	    serverAddress = QString(argv[2]).split("=")[1];
+	  }
+
+	if( argc > 3 && QString(argv[3]).contains("Port", Qt::CaseInsensitive) )
+	  {
+	    port = QString(argv[3]).split("=")[1];
+	  }
+
+	if( serverAddress.isEmpty() ) {
+	  qDebug() << "serverAddress is empty";
+	  server->Start(stateManager.get());
+	} else {
+	  qDebug() << "serverAddress is not empty " << serverAddress << " , " << port;
+	  CSI::String sAddress = "127.0.0.1"; //serverAddress.toStdString().c_str();
+	  int sPort = port.toInt();
+	  server->Start(stateManager.get(),sAddress,8085);
+	}
+
         server->ShutdownRequested() += PureWebCommon::OnPureWebShutdown;
     }
 

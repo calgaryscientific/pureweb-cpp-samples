@@ -40,6 +40,11 @@
 
 #include <QtGui>
 
+#include <QMenuBar>
+#include <QColorDialog>
+#include <QInputDialog>
+#include <QMessageBox>
+
 #include "mainwindow.h"
 #include "scribblearea.h"
 #include "pureweb.h"
@@ -78,10 +83,19 @@ void MainWindow::penColor()
 void MainWindow::penWidth()
 {
     bool ok;
+
+#if QT_VERSION < 0x050000
     int newWidth = QInputDialog::getInteger(this, tr("Scribble"),
                                             tr("Select pen width:"),
                                             scribbleArea->penWidth(),
                                             1, 20, 1, &ok);
+#else
+    int newWidth = QInputDialog::getInt(this, tr("Scribble"),
+                                            tr("Select pen width:"),
+                                            scribbleArea->penWidth(),
+                                            1, 20, 1, &ok);
+
+#endif
     if (ok)
         scribbleArea->setPenWidth(newWidth);
 }

@@ -43,6 +43,7 @@
 
 #include <QList>
 #include <QMainWindow>
+#include <QMenu>
 
 class ScribbleArea;
 

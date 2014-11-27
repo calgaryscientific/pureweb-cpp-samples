@@ -11,13 +11,19 @@ SOURCES       = main.cpp \
 
 CONFIG += qt debug warn_off
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 win32:INCLUDEPATH += "$$(PUREWEB_LIBS)/C++/VS2010/include"
 win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.PureWeb.ImageProcessing32d.lib
 win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.PureWeb.StateManager32d.lib
 win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.Standard32d.lib
 win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.Typeless32d.lib
 
-unix:INCLUDEPATH += "$$(PUREWEB_LIBS)/C++/include"
+unix:INCLUDEPATH += "$$(CSI_LIB)/CSI.Standard/include/"
+unix:INCLUDEPATH += "$$(CSI_LIB)/ISU/include/"
+unix:INCLUDEPATH += "$$(CSI_LIB)/CSI.Typeless/include/"
+unix:INCLUDEPATH += "$$(PWROOT)/sdk/C++/"
+
 
 unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libCSI.PureWeb.ImageProcessing64.so
 unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libCSI.PureWeb.StateManager64.so
@@ -35,14 +41,12 @@ unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libjpeg.so.62
 
 
 
-#unix:!mac{
-#  QMAKE_LFLAGS += -Wl,-rpath=\\\$\$ORIGIN
-#  QMAKE_LFLAGS += -Wl,-rpath=\\\$\$ORIGIN/../../../SDK/Libs/C++/lib
-#  QMAKE_LFLAGS_RPATH=
-#}
+unix:!mac{
+  QMAKE_RPATHDIR += $$(PUREWEB_LIBS)/C++/lib
+}
 
 
-release:DESTDIR = release
+release:DESTDIR = $$(STAGINGDIR)/bin
 release:OBJECTS_DIR = release/.obj
 release:MOC_DIR = release/.moc
 release:RCC_DIR = release/.rcc
