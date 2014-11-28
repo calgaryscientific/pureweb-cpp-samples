@@ -1,16 +1,16 @@
-SCRIBBLEAPP_SRC = "ScribbleAppQt"
+scribbleapp_src = "ScribbleAppQt"
 
-LIB_DIR = "#{BUILD_DIR}/Libs/C++/lib"
+lib_dir = "#{BUILD_DIR}/Libs/C++/lib"
 
-DEPS_SRC = FileList.new(
+deps_src = FileList.new(
             "#{CSI_LIB}/CSI.Standard/lib/*",
             "#{CSI_LIB}/CSI.Typeless/lib/*",
             "#{CSI_LIB}/libjpeg-turbo/lib/*",
             "#{CSI_LIB}/ICU/lib/*.so*")
 
-DEPS_SRC.exclude(/test/)
+deps_src.exclude(/test/)
 
-SERVICE_MGR_CFG = "#{STAGINGDIR}/bin/service-manager-cfg"
+SERVICE_MGR_CFG = "#{STAGINGDIR}/services/service-manager-cfg"
 
 #### Helper Functions
 
@@ -46,11 +46,11 @@ end
 
 #### Lib Dependencies
 
-directory LIB_DIR
+directory lib_dir
 
-task :copy_deps => [LIB_DIR] do
-    DEPS_SRC.each do |src|
-        dst = src.pathmap("#{LIB_DIR}/%f")
+task :copy_deps => [lib_dir] do
+    deps_src.each do |src|
+        dst = src.pathmap("#{lib_dir}/%f")
         sh("cp -a #{src} #{dst}") if !File.exists?(dst) || File.mtime(src) > File.mtime(dst)
     end
 end
@@ -59,13 +59,13 @@ end
 desc "Build the ScribbleAppQt sample"
 task :build_scribbleqt => [:setup, :copy_deps] do
     puts("Building Scribble example...")
-    sh("cd #{SCRIBBLEAPP_SRC} && qmake -makefile scribble.pro && make")
+    sh("cd #{scribbleapp_src} && qmake -makefile scribble.pro && make")
 end
 
 desc "Clean the ScribbleAppQt sample"
 task :clean_scribbleqt do
     puts("Building Scribble example...")
-    sh("cd #{SCRIBBLEAPP_SRC} && make clean")
+    sh("cd #{scribbleapp_src} && make clean")
 end
 
 desc "Build all C++ samples"
@@ -77,16 +77,33 @@ task :clean => [:clean_scribbleqt]
 desc "Deploy Samples"
 task :deploy => [:deploy_scribbleqt]
 
+desc "Stage the C++ samples"
+task :stage do |t|
+	t.invoke_in_scope('build')
+        t.invoke_in_scope('deploy')
+end
+
+task :stageclean do
+	FileUtils.rm @stagedir, :force => true
+end
+
+desc "Package the C++ SDK"
+task :package do
+end
+
+task :packageclean do
+end
+
 
 desc "Deploy Qt example"
 task :deploy_scribbleqt do
   puts("Deploying Scribble example")
-  FileUtils.touch("#{STAGINGDIR}/bin/service_config.json")
-  FileUtils.mkdir_p "#{STAGINGDIR}/bin/ScribbleAppQt"
-  FileUtils.cp "#{SCRIBBLEAPP_SRC}/debug/scribble", "#{STAGINGDIR}/bin/ScribbleAppQt"
+  FileUtils.touch("#{STAGINGDIR}/services/service_config.json")
+  FileUtils.mkdir_p "#{STAGINGDIR}/apps/ScribbleAppQt"
+  FileUtils.cp "#{scribbleapp_src}/debug/scribble", "#{STAGINGDIR}/apps/ScribbleAppQt"
   
   if File.file?("#{SERVICE_MGR_CFG}")
     puts("Writing out config file")
-    sh("#{SERVICE_MGR_CFG} -configFile #{STAGINGDIR}/bin/service_config.json -action add -changeFile #{SCRIBBLEAPP_SRC}/service.json") 
+    sh("#{SERVICE_MGR_CFG} -configFile #{STAGINGDIR}/services/service_config.json -action add -changeFile #{scribbleapp_src}/service.json") 
   end
 end
