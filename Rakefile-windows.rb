@@ -44,7 +44,7 @@ task :setup do
 end
 
 desc "Build C++ Samples"
-task :build,[:variant] => [:deps] do |t, args|
+task :build,[:variant] => [:setup] do |t, args|
 
 	type = args[:variant][0]
 	
