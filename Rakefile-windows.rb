@@ -21,8 +21,16 @@ end
 #### Task Definintions
 
 desc "Setup the C++ environment"
-task :setup do
+task :setup do	
     fail("CSI_LIB environment variable is not set. .Net build requires it") if !ENV["CSI_LIB"]
+	
+	logfiles = File.join("#{BUILD_DIR}/logs", "*samples*.log")
+    delete_list = FileList.new(logfiles)
+    delete_list.each do |file|
+        puts "Removing #{file}"
+        FileUtils.rm_rf("#{file}")
+    end
+	
 
     puts("Checking for Visual Studio 2010...")
     abort("Can't find a Visual Studio 2010 environment!") if !ENV["VS100COMNTOOLS"]
@@ -30,8 +38,9 @@ task :setup do
     puts("Checking for Visual Studio 2008...")
     abort("Can't find a Visual Studio 2008 environment!") if !ENV["VS90COMNTOOLS"]
 
-    puts("Checking for msbuild...")
-    sh("#{MSBUILD} /version") { |ok, res| abort("Can't find msbuild!") if !ok }
+   	puts "Checking for devenv..."
+	abort("Can't find valid devenv 2010 environment!") if !File.exists?("#{DEVENV2010}") 
+	abort("Can't find valid devenv 2008 environment!") if !File.exists?("#{DEVENV2008}")
 end
 
 desc "Build C++ Samples"
@@ -42,8 +51,6 @@ task :build,[:variant] => [:deps] do |t, args|
 	if type == nil
 		abort("Must run build with a valid variant. E.g, rake build[debug]")
 	end
-	
-	
 	
 	if type == "debug"
 		t.invoke_in_scope('build_debug_2010')
@@ -103,11 +110,11 @@ end
 
 #### Internal Tasks
 task :build_debug_2010 => [:setup] do
-	sh("#{MSBUILD} #{VS2010SLN} /m /t:#{@sampletargets} /p:Configuration=DebugCpp;BuildProjectReferences=false")
+	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build DebugSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
 end
 
 task :build_release_2010 => [:setup] do
-	sh("#{MSBUILD} #{VS2010SLN} /m /t:#{@sampletargets} /p:Configuration=ReleaseCpp;BuildProjectReferences=false")
+	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build ReleaseSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_release_2010.log")	
 end
 
 task :build_release => [:build_release_2010]
@@ -121,14 +128,14 @@ task :build_debug => [:build_debug_2010]
 
 
 task :clean_debug_2010 => [:setup] do
-    puts("Cleaning VS2010 Debug SDK...")
-   sh("#{MSBUILD} #{VS2010SLN} /m /t:#{@samplecleantargets} /p:Configuration=DebugCpp")
+   puts("Cleaning VS2010 Debug SDK...")
+   sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Clean DebugSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
 end
 
 
 task :clean_release_2010 => [:setup] do
     puts("Cleaning VS2010 Release SDK...")
-  sh("#{MSBUILD} #{VS2010SLN} /m /t:#{@samplecleantargets} /p:Configuration=ReleaseCpp")
+  sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Clean ReleaseSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
 end
 
 
