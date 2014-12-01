@@ -42,7 +42,9 @@ unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libjpeg.so.62
 
 
 unix:!mac{
-  QMAKE_RPATHDIR += $$(PUREWEB_LIBS)/C++/lib
+    QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../../sdk/Libs/C++/lib
+    QMAKE_RPATHDIR += \\\$\$ORIGIN/../../sdk/Libs/C++/lib
+    QMAKE_RPATH=
 }
 
 
