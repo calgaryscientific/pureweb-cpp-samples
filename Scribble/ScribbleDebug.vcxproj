@@ -362,6 +362,15 @@
     <PostBuildEvent>
       <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Deploying service</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(PUREWEB_HOME)\apps\$(TargetName).exe</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'">
     <Link>
