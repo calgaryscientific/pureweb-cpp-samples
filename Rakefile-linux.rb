@@ -68,6 +68,10 @@ task :clean_scribbleqt do
     sh("cd #{scribbleapp_src} && make clean")
 end
 
+desc "Test C++ Samples"
+task :test do |t|	
+end
+
 desc "Build all C++ samples"
 task :build => [:build_scribbleqt]
 
