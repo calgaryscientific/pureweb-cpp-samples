@@ -110,11 +110,11 @@ end
 
 #### Internal Tasks
 task :build_debug_2010 => [:setup] do
-	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build DebugSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
+	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build \"DebugSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
 end
 
 task :build_release_2010 => [:setup] do
-	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build ReleaseSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_release_2010.log")	
+	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build \"ReleaseSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_release_2010.log")	
 end
 
 task :build_release => [:build_release_2010]
@@ -129,13 +129,13 @@ task :build_debug => [:build_debug_2010]
 
 task :clean_debug_2010 => [:setup] do
    puts("Cleaning VS2010 Debug SDK...")
-   sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Clean DebugSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
+   sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Clean \"DebugSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
 end
 
 
 task :clean_release_2010 => [:setup] do
     puts("Cleaning VS2010 Release SDK...")
-  sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Clean ReleaseSamples /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
+  sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Clean \"ReleaseSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
 end
 
 
