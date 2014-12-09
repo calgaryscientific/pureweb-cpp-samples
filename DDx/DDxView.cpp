@@ -12,7 +12,7 @@ using namespace CSI::PureWeb::Ui;
 
 static Log::Logger logger = Log::GetLogger<DDxView>(); 
 
-DDxView::DDxView()
+DDxView::DDxView() : m_wheelDelta(0)
 {
     static int i = 0;
     
@@ -153,6 +153,8 @@ END_ENUM(MouseButtonName);
 void DDxView::PostMouseEvent(const PureWebMouseEventArgs& mouseEvent) 
 {
     {
+        m_wheelDelta += (long)mouseEvent.Delta;
+
         TypelessStateLock lock(StateManager::Instance()->LockAppState());
 
         String path = Text::Format("/DDx/{0}/MouseEvent", ViewName);
@@ -163,6 +165,7 @@ void DDxView::PostMouseEvent(const PureWebMouseEventArgs& mouseEvent)
         lock.SetValue(path + "/Buttons", MouseButtonName::GetName(mouseEvent.Buttons));
         lock.SetValue(path + "/ChangedButton", MouseButtonName::GetName(mouseEvent.ChangedButton));
         lock.SetValue(path + "/Modifiers", InputEventModifiers::GetName(mouseEvent.Modifiers));
+        lock.SetValueAs<long>(path + "/Delta", m_wheelDelta);
     }
 
     if (mouseEvent.EventType == MouseEventType::MouseDoubleClick &&
