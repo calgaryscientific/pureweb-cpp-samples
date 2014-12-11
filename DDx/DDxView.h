@@ -28,5 +28,6 @@ public:
     
 private:
     int m_colorIndex;
+    long m_wheelDelta;
     CSI::PureWeb::Size m_clientSize;
 };
