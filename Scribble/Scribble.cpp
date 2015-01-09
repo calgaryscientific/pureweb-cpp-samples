@@ -118,7 +118,7 @@ BOOL CScribbleApp::InitInstance()
 
     // create PureWeb object instances
     m_pServer = new CSI::PureWeb::Server::StateManagerServer();
-    m_pStateManager = new CSI::PureWeb::Server::StateManager("ScribbleAppCpp");
+    m_pStateManager = new CSI::PureWeb::Server::StateManager();
 
     // Standard initialization
     // If you are not using these features and wish to reduce the size

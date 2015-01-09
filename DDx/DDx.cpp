@@ -20,7 +20,7 @@ int DDx::m_colorCount = 0;
 void DDx::Go(int argc, char* argv[])
 {
     m_server = new StateManagerServer();
-    m_stateManager = new StateManager("DDxService");
+    m_stateManager = new StateManager();
 
     // Register shutdown handler and start
     m_stateManager->Initialized() += Bind(this, &DDx::OnPureWebStartup);

@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
     // Create PureWeb object instances
     server = new CSI::PureWeb::Server::StateManagerServer();
-    stateManager = new CSI::PureWeb::Server::StateManager("scribble");
+    stateManager = new CSI::PureWeb::Server::StateManager();
 
     if (argc > 1 && QString(argv[1]).contains("PureWeb", Qt::CaseInsensitive))
     {
