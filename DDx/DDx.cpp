@@ -70,6 +70,7 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().AddUiHandler("SetProperty", Bind(this, &DDx::OnSetProperty));
     stateManager.CommandManager().AddUiHandler("Echo", Bind(this, &DDx::OnEcho));
     stateManager.CommandManager().AddUiHandler("TestMerge", Bind(this, &DDx::OnTestMerge));
+	stateManager.CommandManager().AddUiHandler("GenerateCine", Bind(&m_cineView, &DDxCineView::OnExecuteGenerateCine));
 
     const bool useTiles = true;
     stateManager.XmlStateManager().SetValueAs<bool>(_DDx_USETILES, useTiles);
@@ -86,6 +87,9 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
 
     // Register view for ownership test
     stateManager.ViewManager().RegisterView(m_ownershipView.ViewName, &m_ownershipView);
+
+	//Register view for cine test
+	stateManager.ViewManager().RegisterView(m_cineView.ViewName, &m_cineView);
 
     CollaborationManager::Instance().SetSessionDefaultColorProvider(this);
     
@@ -149,6 +153,10 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.ViewManager().UnregisterView(m_ownershipView.ViewName);
     m_ownershipView.SetClientSize(Size(0, 0));
     
+	stateManager.ViewManager().UnregisterView(m_cineView.ViewName);
+	m_cineView.SetClientSize(Size(0,0));
+
+
     CollaborationManager::Instance().SetSessionDefaultColorProvider(NULL);
     m_colorCount = 0;
     

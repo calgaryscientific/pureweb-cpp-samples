@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Canvas.cpp" />
+    <ClCompile Include="DDxCineView.cpp" />
     <ClCompile Include="DDxOwnershipView.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DDx.cpp">
@@ -191,6 +192,7 @@
   <ItemGroup>
     <ClInclude Include="Canvas.h" />
     <ClInclude Include="DDx.h" />
+    <ClInclude Include="DDxCineView.h" />
     <ClInclude Include="DDxOwnershipView.h" />
     <ClInclude Include="DDxView.h" />
     <ClInclude Include="PGView.h" />

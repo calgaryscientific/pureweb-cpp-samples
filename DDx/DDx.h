@@ -6,6 +6,7 @@
 #include "CSI/PureWeb/StateManager/CollaborationManager.h"
 #include "DDxView.h"
 #include "PGView.h"
+#include "DDxCineView.h"
 #include "DDxOwnershipView.h"
 #include "ServicePingResponder.h"
 
@@ -31,6 +32,7 @@ private:
     
     DDxView m_views[m_viewCount];
     PGView m_pgView;
+	DDxCineView m_cineView;
     DDxOwnershipView m_ownershipView;
     CSI::Threading::Signal m_stop;
     CountedPtr<PingResponder> m_pingResponder;
