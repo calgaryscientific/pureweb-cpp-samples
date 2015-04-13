@@ -82,7 +82,11 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     }
 
     m_pgView.ViewName = "PGView";
-    stateManager.ViewManager().RegisterView(m_pgView.ViewName, &m_pgView);
+    ViewRegistrationOptions vo;
+    vo.PreferHWAcceleratedEncoder = true;
+    vo.RenderForCollaborators = false;
+
+    stateManager.ViewManager().RegisterView(m_pgView.ViewName, &m_pgView, vo);
     m_pgView.Initialize();
 
     // Register view for ownership test
