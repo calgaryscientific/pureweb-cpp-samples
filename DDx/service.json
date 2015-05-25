@@ -1,6 +1,6 @@
 [
  {
-    "Name": "DDxService",
+    "Name": "DDxCpp",
     "Description": "DDx App C++",
     "Executable": "./DDxService.exe",
     "Directory": "../apps/DDxService",

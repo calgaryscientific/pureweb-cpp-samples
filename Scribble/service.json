@@ -1,6 +1,6 @@
 [
  {
-    "Name": "ScribbleAppCpp",
+    "Name": "ScribbleCpp",
     "Description": "Scribble App C++",
     "Executable": "./ScribbleAppCpp.exe",
     "Directory": "../apps/ScribbleAppCpp",
