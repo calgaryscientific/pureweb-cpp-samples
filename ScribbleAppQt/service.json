@@ -1,6 +1,6 @@
 [
  {
-    "Name": "scribble",
+    "Name": "ScribbleQt",
     "Description": "Scribble Qt App C++",
     "Executable": "./scribble",
     "Directory": "../apps/ScribbleAppQt",

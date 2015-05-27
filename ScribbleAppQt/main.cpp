@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 	  qDebug() << "serverAddress is not empty " << serverAddress << " , " << port;
 	  CSI::String sAddress = "127.0.0.1"; //serverAddress.toStdString().c_str();
 	  int sPort = port.toInt();
-	  server->Start(stateManager.get(),sAddress,8085);
+	  server->Start(stateManager.get(),sAddress,sPort);
 	}
 
         server->ShutdownRequested() += PureWebCommon::OnPureWebShutdown;
