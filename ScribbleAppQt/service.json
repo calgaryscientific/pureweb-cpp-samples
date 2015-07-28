@@ -4,7 +4,7 @@
     "Description": "Scribble Qt App C++",
     "Executable": "./scribble",
     "Directory": "../apps/ScribbleAppQt",
-    "Arguments": ["-PureWeb", "-Server=127.0.0.1", "-Port=9210"],
+    "Arguments": ["-PureWeb"],
     "Environment": [],
     "AllowMultipleConnections": false,
     "StartupInstances": 0,

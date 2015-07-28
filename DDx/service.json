@@ -4,7 +4,7 @@
     "Description": "DDx App C++",
     "Executable": "./DDxService.exe",
     "Directory": "../apps/DDxService",
-    "Arguments": ["127.0.0.1", "9210"],
+    "Arguments": [],
     "Environment": [],
     "AllowMultipleConnections": false,
     "StartupInstances": 0,
