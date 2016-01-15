@@ -182,3 +182,12 @@ void DDxView::RenderDeferred()
     StateManager::Instance()->ViewManager().RenderViewDeferred(ViewName);
 }
 
+int DDxView::GetBkColorIndex()
+{
+    return m_colorIndex;
+}
+
+void DDxView::SetBkColorIndex(int colorIndex)
+{
+    m_colorIndex = colorIndex;
+}

@@ -24,6 +24,10 @@ public:
     virtual void RenderView(CSI::PureWeb::Server::RenderTarget target);
 
     void RenderDeferred();
+
+    int GetBkColorIndex();
+    void SetBkColorIndex(int colorIndex);
+
     CSI::String ViewName;
     
 private:
