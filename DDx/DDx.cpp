@@ -69,8 +69,9 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().AddUiHandler("TakeOwnership", Bind(this, &DDx::OnTakeOwnership));
     stateManager.CommandManager().AddUiHandler("SetProperty", Bind(this, &DDx::OnSetProperty));
     stateManager.CommandManager().AddUiHandler("Echo", Bind(this, &DDx::OnEcho));
-    stateManager.CommandManager().AddUiHandler("TestMerge", Bind(this, &DDx::OnTestMerge));
+    stateManager.CommandManager().AddIoHandler("TestMerge", Bind(this, &DDx::OnTestMerge));
 	stateManager.CommandManager().AddUiHandler("GenerateCine", Bind(&m_cineView, &DDxCineView::OnExecuteGenerateCine));
+    stateManager.CommandManager().AddUiHandler("RotateDDxViewBkColors", Bind(this, &DDx::OnRotateDDxViewBkColors));	
 
     const bool useTiles = true;
     stateManager.XmlStateManager().SetValueAs<bool>(_DDx_USETILES, useTiles);
@@ -169,7 +170,9 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().RemoveUiHandler("TakeOwnership");
     stateManager.CommandManager().RemoveUiHandler("SetProperty");
     stateManager.CommandManager().RemoveUiHandler("Echo");
-    stateManager.CommandManager().RemoveUiHandler("TestMerge");
+    stateManager.CommandManager().RemoveIoHandler("TestMerge");
+	stateManager.CommandManager().RemoveUiHandler("GenerateCine");
+    stateManager.CommandManager().RemoveUiHandler("RotateDDxViewBkColors");
 
     m_stateManager->PluginManager().UnregisterPlugin("DDxPingResponder", m_pingResponder.get());
 
@@ -337,4 +340,43 @@ void DDx::OnEcho(Guid sessionId, Typeless command, Typeless& response)
 
     response["Key"] = key;
     response["Content"] = contentText;
+}
+
+void DDx::OnRotateDDxViewBkColors(Guid sessionId, Typeless command, Typeless& responses)
+{
+    logger.Debug.Format("Unregistering DDx Views");
+
+    StateManager *stateManager = StateManager::Instance();
+
+    for (int i = 0; i < m_viewCount; i++)
+    {
+        stateManager->ViewManager().UnregisterView(m_views[i].ViewName);
+    }
+
+    logger.Debug.Format("Rotating DDx Views background colors");
+
+    // rotate the view background colors - this has the effect of a clockwise rotation
+    // (mod 4) of the view background colors in the HTML5 client so the first time this
+    // command is invoked we get:
+    //
+    // |-------------------|         |--------------------|
+    // | black  | blue     |         | magenta | black    |
+    // |-------------------| goes to |--------------------|
+    // | green  | magenta  |         | blue    | green    |
+    // |-------------------|         |--------------------|
+
+    int bkColorIndex = m_views[m_viewCount - 1].GetBkColorIndex();
+    for (int i = m_viewCount - 1; i > 0; i--)
+    {
+        m_views[i].SetBkColorIndex(m_views[i - 1].GetBkColorIndex()); 
+    }
+    m_views[0].SetBkColorIndex(bkColorIndex);
+
+    logger.Debug.Format("Re-registering DDx Views");
+
+    for (int i = 0; i < m_viewCount; i++)
+    {
+        stateManager->ViewManager().RegisterView(m_views[i].ViewName, &m_views[i]);
+        m_views[i].RenderDeferred();
+    }
 }

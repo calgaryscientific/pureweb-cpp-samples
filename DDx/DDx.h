@@ -26,6 +26,7 @@ private:
     void OnSetProperty(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& responses);
     void OnEcho(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
     void OnTestMerge(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
+    void OnRotateDDxViewBkColors(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
 
     static const int m_viewCount = 4;
     static int m_colorCount;
