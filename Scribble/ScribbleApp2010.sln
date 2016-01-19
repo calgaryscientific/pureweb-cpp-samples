@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScribbleAppCpp", "Scribble.vcxproj", "{4B4CFD69-1C1A-4CD1-8072-6D6D9483F51D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScribbleClient", "..\ScribbleClient\ScribbleClient.csproj", "{87ECAE99-8D0D-456D-885A-11A7FDCC9394}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
