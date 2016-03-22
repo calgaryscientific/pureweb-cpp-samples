@@ -27,6 +27,13 @@ private:
     void OnEcho(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
     void OnTestMerge(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
     void OnRotateDDxViewBkColors(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
+	void OnSessionStorageBroadcast(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
+    void OnAttachStorageListener(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
+	void OnDetachStorageListener(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
+	void OnQuerySessionStorageKeys(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
+	void OnQuerySessionsWithKey(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
+	void OnSessionListenerValueChanged(SessionStorageChangedEventArgs args);	
+	void OnNewKey(ISessionStorageManager& sessionStorage, SessionStorageChangedEventArgs& args);
 
     static const int m_viewCount = 4;
     static int m_colorCount;

@@ -72,6 +72,11 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().AddIoHandler("TestMerge", Bind(this, &DDx::OnTestMerge));
 	stateManager.CommandManager().AddUiHandler("GenerateCine", Bind(&m_cineView, &DDxCineView::OnExecuteGenerateCine));
     stateManager.CommandManager().AddUiHandler("RotateDDxViewBkColors", Bind(this, &DDx::OnRotateDDxViewBkColors));	
+	stateManager.CommandManager().AddUiHandler("SessionStorageBroadcast", Bind(this, &DDx::OnSessionStorageBroadcast));
+	stateManager.CommandManager().AddUiHandler("AttachStorageListener", Bind(this, &DDx::OnAttachStorageListener));
+	stateManager.CommandManager().AddUiHandler("DetachStorageListener", Bind(this, &DDx::OnDetachStorageListener));
+	stateManager.CommandManager().AddUiHandler("QuerySessionStorageKeys", Bind(this, &DDx::OnQuerySessionStorageKeys));
+	stateManager.CommandManager().AddUiHandler("QuerySessionsWithKey", Bind(this, &DDx::OnQuerySessionsWithKey));
 
     const bool useTiles = true;
     stateManager.XmlStateManager().SetValueAs<bool>(_DDx_USETILES, useTiles);
@@ -173,6 +178,11 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().RemoveIoHandler("TestMerge");
 	stateManager.CommandManager().RemoveUiHandler("GenerateCine");
     stateManager.CommandManager().RemoveUiHandler("RotateDDxViewBkColors");
+	stateManager.CommandManager().RemoveUiHandler("SessionStorageBroadcast");
+	stateManager.CommandManager().RemoveUiHandler("AttachStorageListener");
+	stateManager.CommandManager().RemoveUiHandler("DetachStorageListener");
+	stateManager.CommandManager().RemoveUiHandler("QuerySessionStorageKeys");
+	stateManager.CommandManager().RemoveUiHandler("QuerySessionsWithKey");
 
     m_stateManager->PluginManager().UnregisterPlugin("DDxPingResponder", m_pingResponder.get());
 
@@ -379,4 +389,62 @@ void DDx::OnRotateDDxViewBkColors(Guid sessionId, Typeless command, Typeless& re
         stateManager->ViewManager().RegisterView(m_views[i].ViewName, &m_views[i]);
         m_views[i].RenderDeferred();
     }
+}
+
+
+void DDx::OnSessionListenerValueChanged(SessionStorageChangedEventArgs args)
+{
+    if (args.ChangeType() == SessionStorageChangeType::Set)
+    {
+	    String key(args.Key());
+	    String value(args.NewValue());
+	    String prefix("ServiceListenerReverser-");
+	    key = prefix.Concatenate(key);
+	    value = value.Reverse();
+	    m_stateManager->SessionStorageManager().SetValue(args.SessionId(), key, value);
+    }
+}
+
+void DDx::OnAttachStorageListener(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
+{		
+	m_stateManager->SessionStorageManager().AddValueChangedHandler(sessionId, command["key"], Bind(this, &DDx::OnSessionListenerValueChanged));
+}
+
+void DDx::OnDetachStorageListener(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
+{	
+	m_stateManager->SessionStorageManager().RemoveValueChangedHandler(sessionId, command["key"], Bind(this, &DDx::OnSessionListenerValueChanged));
+}
+
+void DDx::OnSessionStorageBroadcast(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
+{
+	m_stateManager->SessionStorageManager().SetValueForAllSessions(command["key"], command["value"]); 
+}
+
+void DDx::OnQuerySessionStorageKeys(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
+{	
+	String keysStr = "";
+	Collections::List<String> keys = m_stateManager->SessionStorageManager().GetKeys(sessionId);
+	for (int i=0; i < keys.Count(); i++){
+		keysStr = keysStr.Concatenate(";");
+		keysStr = keysStr.Concatenate(keys[i]);
+	}
+
+	response["keys"] = keysStr;	
+}
+
+void DDx::OnQuerySessionsWithKey(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
+{	
+	String guidsStr = "";
+	Collections::List<Guid> guids = m_stateManager->SessionStorageManager().GetSessionsContainingKey(command["key"]);
+	for (int i=0; i < guids.Count(); i++){
+		guidsStr = guidsStr.Concatenate(";");
+		guidsStr = guidsStr.Concatenate(guids[i].ToString());
+	}
+
+	response["guids"] = guidsStr;	
+}
+
+void DDx::OnNewKey(ISessionStorageManager& sessionStorage, SessionStorageChangedEventArgs& args)
+{
+	logger.Info.Format("A new key was added to Session Storage k: {0} v: {1}", args.Key(), args.NewValue());
 }
