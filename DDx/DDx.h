@@ -34,6 +34,7 @@ private:
 	void OnQuerySessionsWithKey(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
 	void OnSessionListenerValueChanged(SessionStorageChangedEventArgs args);	
 	void OnNewKey(ISessionStorageManager& sessionStorage, SessionStorageChangedEventArgs& args);
+    void OnSessionStorageSetKeyForceResponse(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);	
 
     static const int m_viewCount = 4;
     static int m_colorCount;
