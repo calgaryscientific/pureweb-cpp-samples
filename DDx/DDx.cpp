@@ -77,6 +77,7 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
 	stateManager.CommandManager().AddUiHandler("DetachStorageListener", Bind(this, &DDx::OnDetachStorageListener));
 	stateManager.CommandManager().AddUiHandler("QuerySessionStorageKeys", Bind(this, &DDx::OnQuerySessionStorageKeys));
 	stateManager.CommandManager().AddUiHandler("QuerySessionsWithKey", Bind(this, &DDx::OnQuerySessionsWithKey));
+    stateManager.CommandManager().AddUiHandler("SessionStorageSetKeyForceResponse", Bind(this, &DDx::OnSessionStorageSetKeyForceResponse));
 
     const bool useTiles = true;
     stateManager.XmlStateManager().SetValueAs<bool>(_DDx_USETILES, useTiles);
@@ -183,6 +184,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
 	stateManager.CommandManager().RemoveUiHandler("DetachStorageListener");
 	stateManager.CommandManager().RemoveUiHandler("QuerySessionStorageKeys");
 	stateManager.CommandManager().RemoveUiHandler("QuerySessionsWithKey");
+    stateManager.CommandManager().RemoveUiHandler("SessionStorageSetKeyForceResponse");
 
     m_stateManager->PluginManager().UnregisterPlugin("DDxPingResponder", m_pingResponder.get());
 
@@ -417,7 +419,9 @@ void DDx::OnDetachStorageListener(CSI::Guid sessionId, CSI::Typeless command, CS
 
 void DDx::OnSessionStorageBroadcast(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
 {
-	m_stateManager->SessionStorageManager().SetValueForAllSessions(command["key"], command["value"]); 
+    logger.Error.Format("Start OnSessionStorageBroadcast");
+	m_stateManager->SessionStorageManager().SetValueForAllSessions(command["key"], command["value"]);
+    logger.Error.Format("Start OnSessionStorageBroadcast");
 }
 
 void DDx::OnQuerySessionStorageKeys(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
@@ -447,4 +451,13 @@ void DDx::OnQuerySessionsWithKey(CSI::Guid sessionId, CSI::Typeless command, CSI
 void DDx::OnNewKey(ISessionStorageManager& sessionStorage, SessionStorageChangedEventArgs& args)
 {
 	logger.Info.Format("A new key was added to Session Storage k: {0} v: {1}", args.Key(), args.NewValue());
+}
+
+void DDx::OnSessionStorageSetKeyForceResponse(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
+{
+    logger.Error.Format("Start OnSessionStorageSetKeyForceResponse");
+    logger.Error.Format("command key {0}", command["key"]);
+    logger.Error.Format("command value {0}", command["value"]);
+	m_stateManager->SessionStorageManager().SetValue(sessionId, command["key"], command["value"], true);
+    logger.Error.Format("End OnSessionStorageSetKeyForceResponse");
 }
