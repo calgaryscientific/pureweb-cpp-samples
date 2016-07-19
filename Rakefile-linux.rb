@@ -97,7 +97,8 @@ task :deploy_scribbleqt do
   FileUtils.touch("#{STAGINGDIR}/services/service_config.json")
   FileUtils.mkdir_p "#{STAGINGDIR}/apps/ScribbleAppQt"
   FileUtils.cp "#{scribbleapp_src}/debug/scribble", "#{STAGINGDIR}/apps/ScribbleAppQt"
-  
+  FileUtils.cp "#{scribbleapp_src}/service.json", "#{STAGINGDIR}/apps/ScribbleAppQt"
+
   if File.file?("#{SERVICE_MGR_CFG}")
     puts("Writing out config file")
     sh("#{SERVICE_MGR_CFG} -configFile #{STAGINGDIR}/services/service_config.json -action add -changeFile #{scribbleapp_src}/service.json") 

@@ -13,6 +13,7 @@ xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.dll" "%PUREWEB_HOME%\apps\%1"
 xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.pdb" "%PUREWEB_HOME%\apps\%1" 
 xcopy /YFDI %3\%1.exe "%PUREWEB_HOME%\apps\%1"
 xcopy /YFDI %2\cineFrames\* "%PUREWEB_HOME%\apps\%1\cineFrames"
+xcopy /YFDI %2\service.json "%PUREWEB_HOME%\apps\%1"
 
 @REM delete copied UnitTest files
 del "%PUREWEB_HOME%\apps\%1\*.UnitTests*"
