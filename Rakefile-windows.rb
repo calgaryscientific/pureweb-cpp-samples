@@ -1,5 +1,3 @@
-
-
 @ddxservicetarget = "Samples\\DDx\\DDxService"
 @scribbletarget = "Samples\\Scribble\\ScribbleAppDebug_Cpp"
 
@@ -62,28 +60,20 @@ task :build,[:variant] => [:setup] do |t, args|
 end
 
 
-desc "Stage the C++ Samples into #{ENV['PUREWEB_HOME']}"
+desc "Stage the C++ Samples into #{PUREWEB_HOME}"
 task :stage => [@stagedir] do |t|	
 	t.invoke_in_scope('build', 'release') # Staging is done by the DeployServer.bat Post-Build
 end
 
 task :stageclean do	
-	FileUtils.rm_r ENV['PUREWEB_HOME'] + '/apps/DDxService', :force => true
-	FileUtils.rm_r ENV['PUREWEB_HOME'] + '/apps/ScribbleAppCpp', :force => true
-	FileUtils.rm_r ENV['PUREWEB_HOME'] + '/apps/ScribbleAppQt', :force => true
+	FileUtils.rm_r PUREWEB_HOME + '/apps/DDxService', :force => true
+	FileUtils.rm_r PUREWEB_HOME + '/apps/ScribbleAppCpp', :force => true
+	FileUtils.rm_r PUREWEB_HOME + '/apps/ScribbleAppQt', :force => true
 end
 
 desc "Test C++ Samples"
 task :test do |t|	
 end
-
-desc "Package the C++ SDK"
-task :package do
-end
-
-task :packageclean do
-end
-
 
 # Does not clean everything - must blow away manually
 desc "Clean All C++ Libraries"
@@ -106,8 +96,6 @@ task :clean,[:variant]  do |t, args|
     clean_debris
 end
 
-
-
 #### Internal Tasks
 task :build_debug_2010 => [:setup] do
 	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build \"DebugSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
@@ -119,19 +107,12 @@ end
 
 task :build_release => [:build_release_2010]
 
-
 task :build_debug => [:build_debug_2010]
-
-
-
-
-
 
 task :clean_debug_2010 => [:setup] do
    puts("Cleaning VS2010 Debug SDK...")
    sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Clean \"DebugSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
 end
-
 
 task :clean_release_2010 => [:setup] do
     puts("Cleaning VS2010 Release SDK...")
@@ -140,8 +121,6 @@ end
 
 
 task :clean_release => [:clean_release_2010]
-
-
 
 task :clean_debug => [:clean_debug_2010]
 

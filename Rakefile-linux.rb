@@ -91,14 +91,6 @@ task :stageclean do
 	FileUtils.rm @stagedir, :force => true
 end
 
-desc "Package the C++ SDK"
-task :package do
-end
-
-task :packageclean do
-end
-
-
 desc "Deploy Qt example"
 task :deploy_scribbleqt do
   puts("Deploying Scribble example")
