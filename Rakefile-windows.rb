@@ -1,8 +1,6 @@
-@ddxservicetarget = "Samples\\DDx\\DDxService"
-@scribbletarget = "Samples\\Scribble\\ScribbleAppDebug_Cpp"
-
-@sampletargets = "#{@ddxservicetarget};#{@scribbletarget}"
-@samplecleantargets = "#{@ddxservicetarget}:clean;#{@scribbletarget}:clean"
+dir = File.dirname(__FILE__)
+VS2010_DDX_SLN = "#{dir}\\DDx\\DDxService2010.sln"
+VS2010_SCRIBBLE_SLN = "#{dir}\\Scribble\\ScribbleApp2010.sln"
 
 # Clean files left behind by Visual Studio
 def clean_debris 
@@ -98,11 +96,13 @@ end
 
 #### Internal Tasks
 task :build_debug_2010 => [:setup] do
-	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build \"DebugSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_debug_2010.log")	
+	#sh("\"#{DEVENV2010}\" \"#{VS2010_DDX_SLN}\" /Build \"Debug|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\ddx_debug_2010.log")	
+	sh("\"#{DEVENV2010}\" \"#{VS2010_SCRIBBLE_SLN}\" /Build \"Debug|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\scribble_debug_2010.log")	
 end
 
 task :build_release_2010 => [:setup] do
-	sh("\"#{DEVENV2010}\" \"#{VS2010SLN}\" /Build \"ReleaseSamples|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\samples_release_2010.log")	
+	sh("\"#{DEVENV2010}\" \"#{VS2010_DDX_SLN}\" /Build \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\ddx_debug_2010.log")	
+	sh("\"#{DEVENV2010}\" \"#{VS2010_SCRIBBLE_SLN}\" /Build \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\scribble_debug_2010.log")	
 end
 
 task :build_release => [:build_release_2010]
