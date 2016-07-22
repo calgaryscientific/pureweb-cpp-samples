@@ -105,6 +105,7 @@
     <OutDir>bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <LibraryPath>%PUREWEB_HOME%\sdk\Libs\C++\VS2010\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>%PUREWEB_HOME%\sdk\Libs\C++\VS2010\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,7 +123,7 @@
       <AdditionalDependencies>CSI.PureWeb.ImageProcessing64.lib;CSI.PureWeb.StateManager64.lib;CSI.Standard64.lib;CSI.Typeless64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
+      <Command>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -140,7 +141,7 @@
       <AdditionalDependencies>CSI.PureWeb.ImageProcessing64d.lib;CSI.PureWeb.StateManager64d.lib;CSI.Standard64d.lib;CSI.Typeless64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
+      <Command>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -163,7 +164,7 @@
       <AdditionalDependencies>CSI.PureWeb.ImageProcessing32.lib;CSI.PureWeb.StateManager32.lib;CSI.Standard32.lib;CSI.Typeless32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
+      <Command>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -183,9 +184,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>%PUREWEB_HOME%\sdk\Libs\C++\VS2010\lib;(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CSI.PureWeb.ImageProcessing64.lib;CSI.PureWeb.StateManager64.lib;CSI.Standard64.lib;CSI.Typeless64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
+      <Command>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
