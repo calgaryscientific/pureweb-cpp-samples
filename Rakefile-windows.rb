@@ -53,6 +53,9 @@ task :build,[:variant] => [:setup] do |t, args|
 	end
 	
 	if type == "release"
+		#This var is set in the root Rakefile if we're building just a subrepo
+		#gross, I know, but this way C++ samples will build against pre-built libs when
+		#building a subrepo (i.e. you don't have to build sdk then build the samples)
 		if ENV["PUREWEB_BUILD_SUBREPO"] == "true"			
 			t.invoke_in_scope('build_release_solo_2010')
 		else
