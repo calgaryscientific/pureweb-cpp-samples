@@ -83,9 +83,9 @@ end
 desc "Build all C++ samples"
 task :build do |t|
   if ENV["PUREWEB_BUILD_SUBREPO"] == "true"
-    t.invoke_in_scope('build_scribbleqt')
+    t.invoke_in_scope('build_scribbleqt_solo')
   else 
-    t.invoke_in_scope('build_scribbleqt_solo')    
+    t.invoke_in_scope('build_scribbleqt')    
   end
 end
 
