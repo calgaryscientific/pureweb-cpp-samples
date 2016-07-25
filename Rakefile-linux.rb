@@ -36,6 +36,8 @@ task :setup do
 
     abort("JAVA_HOME is not set!") unless ENV["JAVA_HOME"]
 
+    abort("PUREWEB_LIBS is not set!") unless ENV["PUREWEB_LIBS"]
+
 #   puts "Checking for libuuid..."
 #   case
 #   when OS.yum?
@@ -62,6 +64,12 @@ task :build_scribbleqt => [:setup, :copy_deps] do
     sh("cd #{scribbleapp_src} && qmake -makefile scribble.pro && make")
 end
 
+desc "Build the ScribbleAppQt solo sample"
+task :build_scribbleqt_solo => [:setup] do
+    puts("Building Scribble example...")
+    sh("cd #{scribbleapp_src} && qmake -makefile scribble_solo.pro && make")
+end
+
 desc "Clean the ScribbleAppQt sample"
 task :clean_scribbleqt do
     puts("Building Scribble example...")
@@ -73,7 +81,13 @@ task :test do |t|
 end
 
 desc "Build all C++ samples"
-task :build => [:build_scribbleqt]
+task :build do |t|
+  if ENV["PUREWEB_BUILD_SUBREPO"] == "true"
+    t.invoke_in_scope('build_scribbleqt')
+  else 
+    t.invoke_in_scope('build_scribbleqt_solo')    
+  end
+end
 
 desc "Clean all C++ samples"
 task :clean => [:clean_scribbleqt]
@@ -84,7 +98,7 @@ task :deploy => [:deploy_scribbleqt]
 desc "Stage the C++ samples"
 task :stage do |t|
 	t.invoke_in_scope('build')
-        t.invoke_in_scope('deploy')
+  t.invoke_in_scope('deploy')
 end
 
 task :stageclean do
@@ -103,4 +117,12 @@ task :deploy_scribbleqt do
     puts("Writing out config file")
     sh("#{SERVICE_MGR_CFG} -configFile #{STAGINGDIR}/services/service_config.json -action add -changeFile #{scribbleapp_src}/service.json") 
   end
+end
+
+desc "Deploy Qt example"
+task :deploy_scribbleqt_solo do
+  puts("Deploying Scribble solo example")
+  FileUtils.mkdir_p "#{STAGINGDIR}/apps/ScribbleAppQt"
+  FileUtils.cp "#{scribbleapp_src}/debug/scribble", "#{STAGINGDIR}/apps/ScribbleAppQt"
+  FileUtils.cp "#{scribbleapp_src}/service.json", "#{STAGINGDIR}/apps/ScribbleAppQt"
 end
