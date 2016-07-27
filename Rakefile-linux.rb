@@ -98,6 +98,7 @@ task :deploy do
     t.invoke_in_scope('deploy_scribbleqt_solo')
   else 
     t.invoke_in_scope('deploy_scribbleqt')    
+  end
 end 
 
 
