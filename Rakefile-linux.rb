@@ -93,7 +93,13 @@ desc "Clean all C++ samples"
 task :clean => [:clean_scribbleqt]
 
 desc "Deploy Samples"
-task :deploy => [:deploy_scribbleqt]
+task :deploy do 
+  if ENV["PUREWEB_BUILD_SUBREPO"] == "true"
+    t.invoke_in_scope('deploy_scribbleqt_solo')
+  else 
+    t.invoke_in_scope('deploy_scribbleqt')    
+end 
+
 
 desc "Stage the C++ samples"
 task :stage do |t|
