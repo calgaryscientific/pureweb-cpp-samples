@@ -130,6 +130,6 @@ desc "Deploy Qt example"
 task :deploy_scribbleqt_solo do
   puts("Deploying Scribble solo example")
   FileUtils.mkdir_p "#{STAGINGDIR}/apps/ScribbleAppQt"
-  FileUtils.cp "#{scribbleapp_src}/debug/scribble", "#{STAGINGDIR}/apps/ScribbleAppQt"
+  FileUtils.cp "#{scribbleapp_src}/debug/scribble_solo", "#{STAGINGDIR}/apps/ScribbleAppQt/scribble"
   FileUtils.cp "#{scribbleapp_src}/service.json", "#{STAGINGDIR}/apps/ScribbleAppQt"
 end
