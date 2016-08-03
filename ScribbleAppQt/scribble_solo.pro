@@ -32,6 +32,11 @@ unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicutu.so.46
 unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicuuc.so.46
 unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libjpeg.so.62
 
+unix:!mac{
+    QMAKE_LFLAGS += -Wl,--rpath=\\\$\$ORIGIN/../../sdk/Libs/C++/lib
+    QMAKE_RPATHDIR += \\\$\$ORIGIN/../../sdk/Libs/C++/lib
+    QMAKE_RPATH=
+}
 
 release:DESTDIR = $$(STAGINGDIR)/bin
 release:OBJECTS_DIR = release/.obj
