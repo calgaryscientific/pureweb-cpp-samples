@@ -25,7 +25,6 @@ private:
     void OnProfilerStateChanged(CSI::ValueChangedEventArgs args);
     void OnSetProperty(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& responses);
     void OnEcho(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
-    void OnTestMerge(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
     void OnRotateDDxViewBkColors(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
 	void OnSessionStorageBroadcast(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);
     void OnAttachStorageListener(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response);

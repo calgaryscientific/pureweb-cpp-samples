@@ -69,7 +69,6 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().AddUiHandler("TakeOwnership", Bind(this, &DDx::OnTakeOwnership));
     stateManager.CommandManager().AddUiHandler("SetProperty", Bind(this, &DDx::OnSetProperty));
     stateManager.CommandManager().AddUiHandler("Echo", Bind(this, &DDx::OnEcho));
-    stateManager.CommandManager().AddIoHandler("TestMerge", Bind(this, &DDx::OnTestMerge));
 	stateManager.CommandManager().AddUiHandler("GenerateCine", Bind(&m_cineView, &DDxCineView::OnExecuteGenerateCine));
     stateManager.CommandManager().AddUiHandler("RotateDDxViewBkColors", Bind(this, &DDx::OnRotateDDxViewBkColors));	
 	stateManager.CommandManager().AddUiHandler("SessionStorageBroadcast", Bind(this, &DDx::OnSessionStorageBroadcast));
@@ -120,28 +119,6 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     m_stateManager->PluginManager().RegisterPlugin("DDxPingResponder", m_pingResponder.get());
 }
 
-void DDx::OnTestMerge(CSI::Guid sessionId, CSI::Typeless command, CSI::Typeless& response)
-{
-    CSI::Typeless state;
-    CSI::Typeless a("A");
-    a.SetOrderedChildName("B");
-    state.AddNamedChild(a);
-
-    CSI::Typeless diffNode("DiffScript");
-    diffNode.SetOrderedChildName("Diff");
-
-    int count = command["Count"].ValueOr(3000);
-    for(int i = 0; i < count; i++)
-    {
-        CSI::String node = CSI::Text::Format("<Diff><Type>Inserted</Type><Path>/A/#{0}</Path><Value /></Diff>", i);
-        CSI::Typeless child = CSI::Xml::TypelessXml::FromString(node);
-        diffNode.AddOrderedChild(child);
-    }
-    CSI::Stopwatch sw;
-    CSI::TypelessDifference::MergeInPlace(state, diffNode);
-    StateManager::Instance()->XmlStateManager().SetValueAs("/OnTestMerge", sw.Elapsed().TotalMilliseconds());
-}
-
 void DDx::OnTakeOwnership(CSI::Guid sessionid, const CSI::Typeless command, const CSI::Typeless& response)
 {
     CollaborationManager::Instance().SetOwnerSession(sessionid);
@@ -176,8 +153,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().RemoveUiHandler("TakeOwnership");
     stateManager.CommandManager().RemoveUiHandler("SetProperty");
     stateManager.CommandManager().RemoveUiHandler("Echo");
-    stateManager.CommandManager().RemoveIoHandler("TestMerge");
-	stateManager.CommandManager().RemoveUiHandler("GenerateCine");
+    stateManager.CommandManager().RemoveUiHandler("GenerateCine");
     stateManager.CommandManager().RemoveUiHandler("RotateDDxViewBkColors");
 	stateManager.CommandManager().RemoveUiHandler("SessionStorageBroadcast");
 	stateManager.CommandManager().RemoveUiHandler("AttachStorageListener");
