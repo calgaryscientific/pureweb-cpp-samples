@@ -109,7 +109,7 @@ task :stage do |t|
 end
 
 task :stageclean do
-	FileUtils.rm @stagedir, :force => true
+  FileUtils.rm_r "#{STAGINGDIR}/apps/ScribbleAppQt", :force => true	
 end
 
 desc "Deploy Qt example"
