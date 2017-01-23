@@ -9,8 +9,8 @@ md "%PUREWEB_HOME%\apps\%1"
 
 :deploy
 echo "Sending application files to  %PUREWEB_HOME%\bin\%1..." 
-xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.dll" "%PUREWEB_HOME%\apps\%1" 
-xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.pdb" "%PUREWEB_HOME%\apps\%1" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.dll" "%PUREWEB_HOME%\apps\%1" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.pdb" "%PUREWEB_HOME%\apps\%1" 
 xcopy /YFDI %3\%1.exe "%PUREWEB_HOME%\apps\%1"
 xcopy /YFDI %2\service.json "%PUREWEB_HOME%\apps\%1"
 
@@ -18,8 +18,8 @@ xcopy /YFDI %2\service.json "%PUREWEB_HOME%\apps\%1"
 del "%PUREWEB_HOME%\apps\%1\*.UnitTests*"
 
 @REM copy libs to $(TargetDir) to enable debugging in Visual Studio
-xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.dll" "%3" 
-xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\*.pdb" "%3" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.dll" "%3" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.pdb" "%3" 
 
 :conf
 SET targetDir=###%2%###
