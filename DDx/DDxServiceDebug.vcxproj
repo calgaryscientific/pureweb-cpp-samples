@@ -113,7 +113,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SDK\C++;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\include;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -154,7 +154,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SDK\C++;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\include;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
