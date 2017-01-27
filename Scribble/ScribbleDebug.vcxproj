@@ -189,7 +189,7 @@
     <ClCompile>
       <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\include;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SDK\C++;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -212,8 +212,8 @@
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup </EntryPointSymbol>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CSI.Standard64d.lib;CSI.Typeless64d.lib;CSI.PureWeb.ImageProcessing64d.lib;CSI.PureWeb.StateManager64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CSI.Standard64d.lib;CSI.Typeless64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)" VS2015</Command>
@@ -228,7 +228,7 @@
     <ClCompile>
       <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\include;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SDK\C++;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -251,7 +251,7 @@
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup </EntryPointSymbol>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>CSI.Standard64d.lib;CSI.Typeless64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -267,7 +267,7 @@
     <ClCompile>
       <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\include;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SDK\C++;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -290,7 +290,7 @@
       <SubSystem>Console</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup </EntryPointSymbol>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>CSI.Standard64d.lib;CSI.Typeless64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -346,7 +346,7 @@
       <AdditionalOptions>/Zm256 %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\include;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SDK\C++;$(CSI_LIB)\VS2015\CSI.Standard\include;$(CSI_LIB)\VS2015\CSI.Typeless\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -369,8 +369,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <EntryPointSymbol>wWinMainCRTStartup </EntryPointSymbol>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;$(SolutionDir)\build\stage\sdk\Libs\C++\VS2015\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CSI.Standard64.lib;CSI.Typeless64.lib;CSI.PureWeb.ImageProcessing64.lib;CSI.PureWeb.StateManager64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CSI_LIB)\VS2015\CSI.Standard\lib;$(CSI_LIB)\VS2015\CSI.Typeless\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CSI.Standard64.lib;CSI.Typeless64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>"$(ProjectDir)\DeployServer.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)" VS2015</Command>
