@@ -69,7 +69,7 @@ PGView::PGView()
       m_useClientSize(true),
       m_showMousePos(true),
       m_imageCounter(0), 
-      m_timer(TimeSpan::FromMilliseconds(50))   // approx 20 fps
+      m_timer(TimeSpan::FromMilliseconds(15))   // approx 60 fps
 {
 }
 
