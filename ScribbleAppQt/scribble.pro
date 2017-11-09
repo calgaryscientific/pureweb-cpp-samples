@@ -13,11 +13,11 @@ CONFIG += qt debug warn_off
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-win32:INCLUDEPATH += "$$(PUREWEB_LIBS)/C++/VS2010/include"
-win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.PureWeb.ImageProcessing32d.lib
-win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.PureWeb.StateManager32d.lib
-win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.Standard32d.lib
-win32:LIBS += $$(PUREWEB_LIBS)/C++/VS2010/lib/CSI.Typeless32d.lib
+win64:INCLUDEPATH += "$$(PUREWEB_LIBS)/C++/VS2015/include"
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.PureWeb.ImageProcessing64d.lib
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.PureWeb.StateManager64d.lib
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.Standard64d.lib
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.Typeless64d.lib
 
 unix:INCLUDEPATH += "$$(CSI_LIB)/CSI.Standard/include/"
 unix:INCLUDEPATH += "$$(CSI_LIB)/ISU/include/"
