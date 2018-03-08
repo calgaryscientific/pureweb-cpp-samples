@@ -62,3 +62,9 @@ task :upload_to_s3 do
 	    end	
 	end
 end
+
+task :stageTomcat do
+    dir = File.dirname(__FILE__)	
+    FileUtils.cp dir + "/DDx/tomcat/DDxCpp-plugin.xml", PUREWEB_HOME + "/tomcat-server/conf"
+    FileUtils.cp dir + "/Scribble/tomcat/ScribbleCpp-plugin.xml", PUREWEB_HOME + "/tomcat-server/conf"
+end
