@@ -53,10 +53,19 @@ task :upload_to_s3 do
 		puts "looking for #{PUREWEB_HOME}/../pkg/#{filename}.zip"
 	    if File.exists?("#{PUREWEB_HOME}/../pkg/#{filename}.zip")
 	        #upload to the versioned directory
-	        sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://pureweb.io-binaries/continuous/samples/#{projectname}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip")
 
-	        #given that this should only ever be run from a build machine, we can assume that this build also represents the 'latest' build
-	        sh("aws s3 cp s3://pureweb.io-binaries/continuous/samples/#{projectname}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip s3://pureweb.io-binaries/continuous/samples/#{projectname}/latest/#{BUILD_OS}/#{filename}.zip")
+	        branch = ENV["BUILD_BRANCH"]
+
+			print "Current branch is #{branch}"
+
+			if branch != "master"
+				sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://us-west-2.pureweb-apps/branches/#{branch}/#{projectname}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip")
+			else	
+	        	sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://us-west-2.pureweb-apps/releases/#{projectname}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip")
+
+	        	#given that this should only ever be run from a build machine, we can assume that this build also represents the 'latest' build
+	        	sh("aws s3 cp s3://us-west-2.pureweb-apps/releases/#{projectname}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip s3://us-west-2.pureweb-apps/releases/#{projectname}/latest/#{BUILD_OS}/#{filename}.zip")
+	        end
 	    else
 	        puts("No file found.  Skipping upload.")
 	    end	
