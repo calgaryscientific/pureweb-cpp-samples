@@ -62,12 +62,9 @@ void DDxCineView::OnExecuteGenerateCine(Guid sessionId, Typeless command, Typele
 		long lSize;
 		unsigned char * buffer;
 		size_t result;
-
-		char* pPath;
-		pPath = getenv ("PUREWEB_HOME");
 		
 		char strBuff[128];
-		sprintf_s(strBuff, "%s\\apps\\DDxService\\cineFrames\\frame_%d.jpg\0",pPath, i);		
+		sprintf_s(strBuff, "cineFrames\\frame_%d.jpg\0", i);		
 		pFile = fopen (strBuff, "rb" );
 		if (pFile==NULL) 
 		{
