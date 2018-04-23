@@ -30,13 +30,13 @@ unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libCSI.PureWeb.StateManager64.so
 unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libCSI.Standard64.so
 unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libCSI.Typeless64.so
 
-unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicudata.so.46
-unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicui18n.so.46
-unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicuio.so.46
-unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicule.so.46
-unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libiculx.so.46
-unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicutu.so.46
-unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicuuc.so.46
+unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicudata.so.56
+unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicui18n.so.56
+unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicuio.so.56
+unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicule.so.56
+unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libiculx.so.56
+unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicutu.so.56
+unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libicuuc.so.56
 unix:LIBS += $$(PUREWEB_LIBS)/C++/lib/libjpeg.so.62
 
 
