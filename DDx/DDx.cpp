@@ -70,6 +70,7 @@ void DDx::OnPureWebStartup(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().AddUiHandler("SetProperty", Bind(this, &DDx::OnSetProperty));
     stateManager.CommandManager().AddUiHandler("Echo", Bind(this, &DDx::OnEcho));
 	stateManager.CommandManager().AddUiHandler("GenerateCine", Bind(&m_cineView, &DDxCineView::OnExecuteGenerateCine));
+    stateManager.CommandManager().AddUiHandler("DestroyCine", Bind(&m_cineView, &DDxCineView::OnExecuteDestroyCine));
     stateManager.CommandManager().AddUiHandler("RotateDDxViewBkColors", Bind(this, &DDx::OnRotateDDxViewBkColors));	
 	stateManager.CommandManager().AddUiHandler("SessionStorageBroadcast", Bind(this, &DDx::OnSessionStorageBroadcast));
 	stateManager.CommandManager().AddUiHandler("AttachStorageListener", Bind(this, &DDx::OnAttachStorageListener));
@@ -154,6 +155,7 @@ void DDx::OnPureWebShutdown(StateManager& stateManager, EmptyEventArgs&)
     stateManager.CommandManager().RemoveUiHandler("SetProperty");
     stateManager.CommandManager().RemoveUiHandler("Echo");
     stateManager.CommandManager().RemoveUiHandler("GenerateCine");
+    stateManager.CommandManager().RemoveUiHandler("DestroyCine");    
     stateManager.CommandManager().RemoveUiHandler("RotateDDxViewBkColors");
 	stateManager.CommandManager().RemoveUiHandler("SessionStorageBroadcast");
 	stateManager.CommandManager().RemoveUiHandler("AttachStorageListener");

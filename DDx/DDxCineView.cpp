@@ -33,7 +33,7 @@ Size DDxCineView::GetActualSize()
 
 void DDxCineView::RenderView(RenderTarget target)
 {
-	 Image image = target.RenderTargetImage();
+	Image image = target.RenderTargetImage();
     Canvas c(image);
 	c.Clear(PureWebColor::FromKnownColor(PureWebKnownColor::DarkGray));
     for(int i  = 0; i < image.Width(); i = i + 20)
@@ -68,7 +68,7 @@ void DDxCineView::OnExecuteGenerateCine(Guid sessionId, Typeless command, Typele
 		pFile = fopen (strBuff, "rb" );
 		if (pFile==NULL) 
 		{
-			logger.Debug.Format("File error"); 
+			logger.Debug.Format("File error, unable to open: {0}", CSI::Environment::CurrentDirectory() + "\\" + strBuff);
 			exit (1);
 		}
 		fseek (pFile , 0 , SEEK_END);

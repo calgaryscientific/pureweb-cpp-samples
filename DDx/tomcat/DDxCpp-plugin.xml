@@ -14,6 +14,7 @@
         <property name="licenseManager" ref="licenseManager"/>
         <property name="application" value="DDx"/>
         <property name="description" value="DDx diagnostics app"/>
+        <property name="directory" value="${PUREWEB_HOME}/apps/DDxService"/>        
         <property name="executable" value="${PUREWEB_HOME}/apps/DDxService/DDxService.exe"/>
     </bean>
     
