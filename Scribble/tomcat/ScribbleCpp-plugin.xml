@@ -30,7 +30,6 @@
             <map>
 				<entry key="html5" value="ScribbleApp.html"/>
                 <entry key="ios" value=""/>
-                <entry key="android" value=""/>
             </map>
         </property>
     </bean>
