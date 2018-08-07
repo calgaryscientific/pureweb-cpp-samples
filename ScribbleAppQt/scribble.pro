@@ -13,11 +13,11 @@ CONFIG += qt debug warn_off
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-win64:INCLUDEPATH += "$$(PUREWEB_LIBS)/C++/VS2015/include"
-win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.PureWeb.ImageProcessing64d.lib
-win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.PureWeb.StateManager64d.lib
-win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.Standard64d.lib
-win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2015/lib/CSI.Typeless64d.lib
+win64:INCLUDEPATH += "$$(PUREWEB_LIBS)/C++/VS2017/include"
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2017/lib/CSI.PureWeb.ImageProcessing64d.lib
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2017/lib/CSI.PureWeb.StateManager64d.lib
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2017/lib/CSI.Standard64d.lib
+win64:LIBS += $$(PUREWEB_LIBS)/C++/VS2017/lib/CSI.Typeless64d.lib
 
 unix:INCLUDEPATH += "$$(CSI_LIB)/CSI.Standard/include/"
 unix:INCLUDEPATH += "$$(CSI_LIB)/ISU/include/"
@@ -59,4 +59,5 @@ debug:OBJECTS_DIR = debug/.obj
 debug:MOC_DIR = debug/.moc
 debug:RCC_DIR = debug/.rcc
 debug:UI_DIR = debug/.ui
+
 
