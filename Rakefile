@@ -21,7 +21,21 @@ task :package do
 		FileUtils.mkdir "#{PUREWEB_HOME}/../pkg"
 	end
 
+	# Write manifest
+	hash = `git rev-parse --short HEAD`	
+	branch = `git rev-parse --abbrev-ref HEAD`
+	date = Time.now.strftime("%m-%d-%Y")
+
 	projects.each do |name, project|
+
+		File.open("#{PUREWEB_HOME}/apps/#{project}/VERSION", 'w') do |file|
+			file.write("Git Hash: #{hash}")
+			file.write("Git Branch: #{branch}")
+			file.write("Build Date: #{date}")
+			file.write("\n\nLast commit: ")						
+			file.write(`git log --pretty=oneline -n1`)
+		end
+
 		archiveName = "pureweb-sample-CPP-service-#{name}"	
 		if !Dir.glob("#{PUREWEB_HOME}/apps/#{project}/").empty?
             archive = OS.windows? ? "\"#{CSI_LIB}\\Tools\\7zip\\7z.exe\" a -tzip #{PUREWEB_HOME}\\..\\pkg\\#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project}" :
