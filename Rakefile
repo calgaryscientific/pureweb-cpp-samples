@@ -1,8 +1,8 @@
 require_relative("../../Rakefile-init")
 
 projects = {
-    "DDx" => "./DDxService",        
-    "Scribble" => "./ScribbleAppCpp",
+    "DDxCpp" => "./DDxService",        
+    "ScribbleCpp" => "./ScribbleAppCpp",
     "ScribbleQT" => "./ScribbleAppQt"
 }
 
@@ -61,10 +61,7 @@ task :upload_to_s3 do
 			if branch != "master"
 				sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://base.pureweb-apps/branches/#{branch}/#{name}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip --region us-west-2")
 			else	
-	        	sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://base.pureweb-apps/releases/#{name}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip --region us-west-2")
-
-	        	#given that this should only ever be run from a build machine, we can assume that this build also represents the 'latest' build
-	        	sh("aws s3 cp s3://base.pureweb-apps/releases/#{name}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip s3://base.pureweb-apps/releases/#{name}/latest/#{BUILD_OS}/#{filename}.zip --region us-west-2")
+	        	sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://base.pureweb-apps/#{name}/#{BUILD_OS}/#{name}.zip --region us-west-2")
 	        end
 	    else
 	        puts("No file found.  Skipping upload.")
