@@ -19,8 +19,7 @@ def install_qmake()
     when OS.aptget?
         sh("#{SUDO} apt-get -y install qt4-qmake")
     when OS.yum?
-        sh("#{SUDO} yum -y install qt4-devel")
-        sh("#{SUDO} ln -s /usr/bin/qmake-qt4 /usr/bin/qmake")
+        sh("sudo  yum -y install qt5-qtbase-devel")
     else
         abort("Can't find qmake!")
     end
@@ -32,17 +31,11 @@ end
 desc "Setup the Linux build environment"
 task :setup do
     puts("Checking for qmake...")
-    sh("qmake --version") { |ok, res| install_qmake() unless ok }
+    sh("qmake-qt5 --version") { |ok, res| install_qmake() unless ok }
 
     abort("JAVA_HOME is not set!") unless ENV["JAVA_HOME"]
 
     abort("PUREWEB_LIBS is not set!") unless ENV["PUREWEB_LIBS"]
-
-#   puts "Checking for libuuid..."
-#   case
-#   when OS.yum?
-#       sh("#{SUDO} yum -y install libuuid-devel")
-#   end
 
 end
 
@@ -61,13 +54,13 @@ end
 desc "Build the ScribbleAppQt sample"
 task :build_scribbleqt => [:setup, :copy_deps] do
     puts("Building Scribble example...")
-    sh("cd #{scribbleapp_src} && qmake -makefile scribble.pro && make")
+    sh("cd #{scribbleapp_src} && qmake-qt5 -makefile scribble.pro && make")
 end
 
 desc "Build the ScribbleAppQt solo sample"
 task :build_scribbleqt_solo => [:setup] do
     puts("Building Scribble example...")
-    sh("cd #{scribbleapp_src} && qmake -makefile scribble_solo.pro && make")
+    sh("cd #{scribbleapp_src} && qmake-qt5 -makefile scribble_solo.pro && make")
 end
 
 desc "Clean the ScribbleAppQt sample"
