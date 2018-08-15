@@ -24,6 +24,7 @@ task :package do
 	projects.each do |name, project|
 		archiveName = "pureweb-sample-CPP-service-#{name}"	
 		if !Dir.glob("#{PUREWEB_HOME}/apps/#{project}/").empty?
+			FileUtils.rm Dir.glob("#{PUREWEB_HOME}/apps/#{project}/*.pdb")
             archive = OS.windows? ? "\"#{CSI_LIB}\\Tools\\7zip\\7z.exe\" a -tzip #{PUREWEB_HOME}\\..\\pkg\\#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project}" :
                 "zip -rj #{PUREWEB_HOME}/../pkg/#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project}/"
 			sh(archive)
