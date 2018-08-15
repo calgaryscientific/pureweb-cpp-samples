@@ -30,7 +30,7 @@ task :package do
 
 		archiveName = "pureweb-sample-CPP-service-#{name}"	
 		if !Dir.glob("#{PUREWEB_HOME}/apps/#{project}/").empty?
-
+			FileUtils.rm Dir.glob("#{PUREWEB_HOME}/apps/#{project}/*.pdb")
 			File.open("#{PUREWEB_HOME}/apps/#{project[0]}/VERSION", 'w') do |file|
 				file.write("Git Hash: #{hash}")
 				file.write("Git Branch: #{branch}")
