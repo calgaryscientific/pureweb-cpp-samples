@@ -9,7 +9,7 @@ SOURCES       = main.cpp \
                 mainwindow.cpp \
                 scribblearea.cpp
 
-CONFIG += qt debug warn_off
+CONFIG += qt release warn_off
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -48,7 +48,7 @@ unix:!mac{
 }
 
 
-release:DESTDIR = $$(STAGINGDIR)/bin
+release:DESTDIR = release
 release:OBJECTS_DIR = release/.obj
 release:MOC_DIR = release/.moc
 release:RCC_DIR = release/.rcc
