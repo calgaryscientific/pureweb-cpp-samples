@@ -110,7 +110,7 @@ task :deploy_scribbleqt do
   puts("Deploying Scribble example")
   FileUtils.touch("#{STAGINGDIR}/services/service_config.json")
   FileUtils.mkdir_p "#{STAGINGDIR}/apps/ScribbleAppQt"
-  FileUtils.cp "#{scribbleapp_src}/debug/scribble", "#{STAGINGDIR}/apps/ScribbleAppQt"
+  FileUtils.cp "#{scribbleapp_src}/release/scribble", "#{STAGINGDIR}/apps/ScribbleAppQt"
   FileUtils.cp "#{scribbleapp_src}/service.json", "#{STAGINGDIR}/apps/ScribbleAppQt"
 
   if File.file?("#{SERVICE_MGR_CFG}")
@@ -123,6 +123,6 @@ desc "Deploy Qt example"
 task :deploy_scribbleqt_solo do
   puts("Deploying Scribble solo example")
   FileUtils.mkdir_p "#{STAGINGDIR}/apps/ScribbleAppQt"
-  FileUtils.cp "#{scribbleapp_src}/debug/scribble_solo", "#{STAGINGDIR}/apps/ScribbleAppQt/scribble"
+  FileUtils.cp "#{scribbleapp_src}/release/scribble_solo", "#{STAGINGDIR}/apps/ScribbleAppQt/scribble"
   FileUtils.cp "#{scribbleapp_src}/service.json", "#{STAGINGDIR}/apps/ScribbleAppQt"
 end
