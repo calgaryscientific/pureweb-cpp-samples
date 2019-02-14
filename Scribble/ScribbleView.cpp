@@ -49,7 +49,10 @@ CScribbleView::CScribbleView()
     m_startpt = -1;
     m_endpt = -1;
     m_cColor = COLORREF(RGB(0,0,0));
-    CScribbleApp::StateManager().ViewManager().RegisterView("ScribbleView", this);
+	ViewRegistrationOptions vo;
+	vo.PreferHWAcceleratedEncoder = true;
+	vo.RenderForCollaborators = false;
+    CScribbleApp::StateManager().ViewManager().RegisterView("ScribbleView", this, vo);
     
     ViewImageFormat viewImageFormat;
     viewImageFormat.PixelFormat = PixelFormat::Bgr24;

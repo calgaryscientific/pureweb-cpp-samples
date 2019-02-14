@@ -56,7 +56,10 @@ ScribbleArea::ScribbleArea(QWidget *parent)
     scribbling = false;
 
     // Register PureWeb view
-    PureWebCommon::StateManager().ViewManager().RegisterView("ScribbleView", this);
+    ViewRegistrationOptions vo;
+    vo.PreferHWAcceleratedEncoder = true;
+    vo.RenderForCollaborators = false;    
+    PureWebCommon::StateManager().ViewManager().RegisterView("ScribbleView", this, vo);
 
     // Set view image format
     ViewImageFormat viewImageFormat;
