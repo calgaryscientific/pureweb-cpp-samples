@@ -16,11 +16,15 @@
     <property name="description" value="ScribbleApp Qt"/>
     <property name="directory" value="${PUREWEB_HOME}/apps/ScribbleAppQt/"/>
     <property name="executable" value="${PUREWEB_HOME}/apps/ScribbleAppQt/scribble"/>
-
     <property name="arguments">
       <list>
         <value>/PureWeb</value>
       </list>
+    </property>
+    <property name="environment">
+      <map>
+        <entry key="LD_LIBRARY_PATH" value="${LD_LIBRARY_PATH}:${PUREWEB_HOME}/apps/ScribbleAppQt/"/>
+      </map>
     </property>
   </bean>
   <bean class="pureweb.cluster.SupportedClients" scope="prototype" id="supportedClients">
