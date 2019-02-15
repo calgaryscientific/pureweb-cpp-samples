@@ -15,8 +15,7 @@ else
 fi
 
 echo "Checking qmake installed"
-#qmake-qt5 --version &> /dev/null
-qmake-qt4 --version
+qmake-qt5 --version &> /dev/null
 if [ $? != 0 ]; then
     echo "qmake-qt5 is not installed, exiting build"
     exit 1
